@@ -34,6 +34,10 @@ begin
 end;
 $$;
 
+-- Only the scheduled job and the service role may run the cleanup
+revoke all on function public.cleanup_old_data() from public, anon, authenticated;
+grant execute on function public.cleanup_old_data() to postgres, service_role;
+
 -- Enable pg_cron and schedule the job
 create extension if not exists pg_cron;
 

@@ -4,6 +4,7 @@ create or replace function public.compare_description(p_desc text)
 returns text
 language sql
 immutable
+set search_path = ''
 as $$
   select trim(regexp_replace(regexp_replace(lower(coalesce(p_desc, '')), '\d', '', 'g'), '\s+', ' ', 'g'));
 $$;

@@ -15,16 +15,17 @@ alter table public.checklist_items enable row level security;
 alter table public.checklist_ticks enable row level security;
 
 -- 1. users: SEC1, SEC2
-grant select on public.users to authenticated;
-revoke insert, update, delete on public.users from authenticated, anon;
+revoke all on public.users from authenticated, anon;
+grant select (id, email, first_name, ask_count, ask_count_date, created_at) on public.users to authenticated;
 
 create policy users_select_owner on public.users
   for select to authenticated
   using (id = auth.uid());
 
 -- 2. money_profiles: SEC4, SEC5
-grant select, update on public.money_profiles to authenticated;
-revoke insert, delete on public.money_profiles from authenticated, anon;
+revoke all on public.money_profiles from authenticated, anon;
+grant select on public.money_profiles to authenticated;
+grant update (gross_income, net_income, has_no_debts, setup_step, completed_at) on public.money_profiles to authenticated;
 
 create policy money_profiles_select_owner on public.money_profiles
   for select to authenticated
@@ -36,8 +37,8 @@ create policy money_profiles_update_owner on public.money_profiles
   with check (user_id = auth.uid());
 
 -- 3. debts: SEC6
+revoke all on public.debts from authenticated, anon;
 grant select, insert, update, delete on public.debts to authenticated;
-revoke all on public.debts from anon;
 
 create policy debts_select_owner on public.debts
   for select to authenticated
@@ -57,8 +58,8 @@ create policy debts_delete_owner on public.debts
   using (user_id = auth.uid());
 
 -- 4. expenses: SEC7
+revoke all on public.expenses from authenticated, anon;
 grant select, insert, update, delete on public.expenses to authenticated;
-revoke all on public.expenses from anon;
 
 create policy expenses_select_owner on public.expenses
   for select to authenticated
@@ -78,8 +79,9 @@ create policy expenses_delete_owner on public.expenses
   using (user_id = auth.uid());
 
 -- 5. transactions: SEC8, SEC9, SEC10
-grant select, update on public.transactions to authenticated;
-revoke insert, delete on public.transactions from authenticated, anon;
+revoke all on public.transactions from authenticated, anon;
+grant select on public.transactions to authenticated;
+grant update (flag_status) on public.transactions to authenticated;
 
 create policy transactions_select_owner on public.transactions
   for select to authenticated
@@ -91,8 +93,8 @@ create policy transactions_update_owner on public.transactions
   with check (user_id = auth.uid());
 
 -- 6. chat_messages: SEC11, SEC12
+revoke all on public.chat_messages from authenticated, anon;
 grant select, delete on public.chat_messages to authenticated;
-revoke insert, update on public.chat_messages from authenticated, anon;
 
 create policy chat_messages_select_owner on public.chat_messages
   for select to authenticated
@@ -103,27 +105,25 @@ create policy chat_messages_delete_owner on public.chat_messages
   using (user_id = auth.uid());
 
 -- 7. guides: SEC13
-grant select on public.guides to authenticated;
-revoke all on public.guides from anon;
-revoke insert, update, delete on public.guides from authenticated;
+-- anon holds the table grant but no policy, so RLS returns no rows to logged-out visitors
+revoke all on public.guides from authenticated, anon;
+grant select on public.guides to authenticated, anon;
 
 create policy guides_select_authenticated on public.guides
   for select to authenticated
   using (true);
 
 -- 8. checklist_items: SEC13
-grant select on public.checklist_items to authenticated;
-revoke all on public.checklist_items from anon;
-revoke insert, update, delete on public.checklist_items from authenticated;
+revoke all on public.checklist_items from authenticated, anon;
+grant select on public.checklist_items to authenticated, anon;
 
 create policy checklist_items_select_authenticated on public.checklist_items
   for select to authenticated
   using (true);
 
 -- 9. checklist_ticks: SEC14
+revoke all on public.checklist_ticks from authenticated, anon;
 grant select, insert, delete on public.checklist_ticks to authenticated;
-revoke update on public.checklist_ticks from authenticated;
-revoke all on public.checklist_ticks from anon;
 
 create policy checklist_ticks_select_owner on public.checklist_ticks
   for select to authenticated

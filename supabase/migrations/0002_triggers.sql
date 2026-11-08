@@ -19,7 +19,7 @@ begin
     new.id,
     lower(new.email),
     coalesce(new.raw_user_meta_data->>'first_name', 'User'),
-    coalesce((new.raw_user_meta_data->>'is_18_or_older')::boolean, true),
+    coalesce((new.raw_user_meta_data->>'is_18_or_older')::boolean, false),
     now()
   );
 
@@ -93,7 +93,7 @@ begin
   where user_id = new.user_id;
 
   if v_count >= 15 then
-    raise exception 'limit_debts' using message = 'You''ve reached the limit of 15 debts.';
+    raise exception 'limit_debts';
   end if;
 
   return new;
@@ -120,7 +120,7 @@ begin
   where user_id = new.user_id;
 
   if v_count >= 20 then
-    raise exception 'limit_expenses' using message = 'You''ve reached the limit of 20 expenses.';
+    raise exception 'limit_expenses';
   end if;
 
   return new;
@@ -149,7 +149,7 @@ begin
       where user_id = new.user_id;
 
       if v_debt_count > 0 then
-        raise exception 'check_has_no_debts' using message = 'Cannot set has_no_debts to true when user has debts.';
+        raise exception 'check_has_no_debts';
       end if;
     end if;
     return new;
@@ -186,7 +186,7 @@ declare
 begin
   if new.completed_at is not null and (old.completed_at is null or new.completed_at <> old.completed_at) then
     if new.gross_income is null or new.net_income is null then
-      raise exception 'check_profile_complete' using message = 'Both gross and net income must be saved to complete profile.';
+      raise exception 'check_profile_complete';
     end if;
 
     select count(*) into v_expense_count
@@ -194,7 +194,7 @@ begin
     where user_id = new.user_id;
 
     if v_expense_count < 1 then
-      raise exception 'check_profile_complete' using message = 'At least 1 expense must be saved to complete profile.';
+      raise exception 'check_profile_complete';
     end if;
 
     select count(*) into v_debt_count
@@ -202,7 +202,7 @@ begin
     where user_id = new.user_id;
 
     if v_debt_count < 1 and new.has_no_debts = false then
-      raise exception 'check_profile_complete' using message = 'At least 1 debt must be saved or has_no_debts must be true.';
+      raise exception 'check_profile_complete';
     end if;
   end if;
 
@@ -228,14 +228,14 @@ begin
   v_today := timezone('Africa/Johannesburg', now())::date;
 
   if new.date > v_today or new.date < (v_today - 90) then
-    raise exception 'check_transaction_date' using message = 'Transaction date must be between 90 days ago and today (SAST).';
+    raise exception 'check_transaction_date';
   end if;
 
   return new;
 end;
 $$;
 
-create trigger check_transaction_date_trigger
+create trigger check_transaction_date
   before insert on public.transactions
   for each row execute function public.check_transaction_date();
 
@@ -255,7 +255,7 @@ begin
   where user_id = new.user_id;
 
   if v_count >= 1000 then
-    raise exception 'limit_transactions' using message = 'This would take you over 1,000 transactions. Delete all transactions in Account, then try again.';
+    raise exception 'limit_transactions';
   end if;
 
   return new;
@@ -272,13 +272,10 @@ create or replace function public.guard_flag_status()
 returns trigger
 language plpgsql
 security invoker
+set search_path = ''
 as $$
-declare
-  v_role text;
 begin
-  v_role := auth.role();
-
-  if v_role = 'authenticated' then
+  if current_user = 'authenticated' then
     -- Verify ONLY flag_status changed
     if new.id <> old.id
       or new.user_id <> old.user_id
@@ -289,7 +286,7 @@ begin
       or new.flag_type <> old.flag_type
       or new.created_at <> old.created_at
     then
-      raise exception 'guard_flag_status' using message = 'Only flag_status may be updated by authenticated users.';
+      raise exception 'guard_flag_status';
     end if;
 
     -- Verify allowed status transitions from 8.3:
@@ -303,7 +300,7 @@ begin
       (old.flag_status = 'open' and new.flag_status = 'querying') or
       (old.flag_status = 'querying' and new.flag_status = 'resolved')
     ) then
-      raise exception 'guard_flag_status' using message = 'Invalid flag_status transition.';
+      raise exception 'guard_flag_status';
     end if;
 
     new.flag_status_changed_at = now();

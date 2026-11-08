@@ -107,5 +107,15 @@ select is(
   'T-BR14-2 recalculating preserves querying status'
 );
 
+-- T-BR14-2: a flag that no longer qualifies is cleared
+delete from public.transactions where id = '44444444-4444-4444-4444-444444444442';
+select public.recalculate_flags('11111111-1111-1111-1111-111111111116');
+
+select is(
+  (select flag_type from public.transactions where id = '44444444-4444-4444-4444-444444444443'),
+  'none',
+  'T-BR14-2 a flag that no longer qualifies is cleared'
+);
+
 select * from finish();
 rollback;
