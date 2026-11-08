@@ -8,6 +8,8 @@ export interface ModalProps {
   isOpen: boolean;
   onClose: () => void;
   title: string;
+  /** Shown instead of the plain title, which stays the accessible name. */
+  titleNode?: React.ReactNode;
   variant?: ModalVariant;
   maxWidth?: ModalMaxWidth;
   children: React.ReactNode;
@@ -18,6 +20,7 @@ export const Modal: React.FC<ModalProps> = ({
   isOpen,
   onClose,
   title,
+  titleNode,
   variant = 'dialog',
   maxWidth = '560',
   children,
@@ -59,7 +62,7 @@ export const Modal: React.FC<ModalProps> = ({
       <div
         role="dialog"
         aria-modal="true"
-        aria-labelledby="modal-title"
+        aria-label={title}
         className={`w-full bg-white border border-appBorder shadow-none overflow-y-auto ${
           isBottomSheet
             ? 'h-auto max-h-[90vh] rounded-t-card tablet:rounded-card p-6'
@@ -68,7 +71,7 @@ export const Modal: React.FC<ModalProps> = ({
       >
         <div className="flex items-center justify-between pb-4 border-b border-appBorder">
           <h2 id="modal-title" className="text-lg font-semibold text-mainText">
-            {title}
+            {titleNode ?? title}
           </h2>
           <button
             type="button"

@@ -79,7 +79,7 @@ fs.writeFileSync('tests/fixtures/bad-header.csv', 'tx_date,tx_desc,tx_amount\n20
 // 4. old-rows.csv (52 good rows, 10 old rows > 90 days ago)
 const oldRows = ['date,description,amount'];
 for (let i = 1; i <= 10; i++) {
-  oldRows.push('2026-01-0' + i + ',VERY OLD ROW,-50.00');
+  oldRows.push('2026-01-' + String(i).padStart(2, '0') + ',VERY OLD ROW,-50.00');
 }
 for (let i = 0; i < 52; i++) {
   oldRows.push(ordinaryThando[i]);

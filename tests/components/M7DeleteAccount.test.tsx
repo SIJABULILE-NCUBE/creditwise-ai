@@ -4,6 +4,7 @@ import * as auth from '@/lib/api/auth';
 import { S12Account } from '@/pages/S12Account';
 import { renderWithRouter, setOnline } from './helpers';
 
+vi.mock('@/lib/api/transactions');
 vi.mock('@/lib/api/auth');
 
 function openModal() {

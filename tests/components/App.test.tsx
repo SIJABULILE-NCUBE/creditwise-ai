@@ -6,6 +6,7 @@ import App from '@/App';
 import { INACTIVITY_LIMIT_MS, ABSOLUTE_LIMIT_MS, LOGIN_AT_KEY, LAST_ACTIVITY_KEY } from '@/lib/session';
 import { setOnline } from './helpers';
 
+vi.mock('@/lib/api/transactions');
 vi.mock('@/lib/api/auth');
 
 type Listener = Parameters<typeof auth.onAuthChange>[0];

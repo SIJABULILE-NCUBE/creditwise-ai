@@ -15,7 +15,7 @@ export interface TabBarProps {
   openFlagCount?: number;
 }
 
-export const TabBar: React.FC<TabBarProps> = () => (
+export const TabBar: React.FC<TabBarProps> = ({ openFlagCount = 0 }) => (
   <nav
     aria-label="Main"
     className="fixed bottom-0 left-0 right-0 z-30 flex h-tab border-t border-appBorder bg-surface desktop:top-0 desktop:h-auto desktop:w-sidebar desktop:right-auto desktop:flex-col desktop:border-r desktop:border-t-0 desktop:p-3"
@@ -44,6 +44,11 @@ export const TabBar: React.FC<TabBarProps> = () => (
             {isActive && <span data-testid="active-bar" className="absolute left-3 right-3 top-0 h-[3px] rounded-pill bg-primary desktop:bottom-2 desktop:left-0 desktop:right-auto desktop:top-2 desktop:h-auto desktop:w-[3px]" />}
             <span className="relative">
               <Icon className="h-6 w-6" aria-hidden="true" />
+              {to === '/transactions' && openFlagCount > 0 && (
+                <span data-testid="tab-badge" className="absolute -right-2 -top-1 min-w-4 rounded-pill bg-appError px-1 text-center text-xs font-semibold text-white">
+                  {openFlagCount > 9 ? '9+' : openFlagCount}
+                </span>
+              )}
             </span>
             {label}
           </>

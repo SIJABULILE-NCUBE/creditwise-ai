@@ -1150,24 +1150,24 @@ All tests in this phase are pgTAP tests in `supabase/tests/`, acting as the seed
 | T-NFR-9 | Integration | `transactions.int.test.ts` | A 500-row import finishes within 10 seconds against the local backend |
 | T-E2E-2 | E2E | `e2e/02_check_bank_activity.spec.ts` | Flow 2: S8 empty → M3 → upload → Toast → "Flagged" → M4 for FITZONE GYM DEBIT → "I'll query it" → badge shows 2 |
 
-- [ ] All tests above are written, run, and fail for the expected reason.
+- [x] All tests above are written, run, and fail for the expected reason.
 
 **Step 2: Backend (Green)**
 
-- [ ] `api/lib/csv.ts` (BR9 with Papa Parse) and `api/routes/transactions.ts` for OP15, OP16 and OP17, each behind `requireUser`, inserting or deleting with `supabaseAdmin` for the token's user only, then calling `recalculate_flags`.
-- [ ] `public/creditwise-template.csv` with the header row and 2 example rows.
+- [x] `api/lib/csv.ts` (BR9 with Papa Parse) and `api/routes/transactions.ts` for OP15, OP16 and OP17, each behind `requireUser`, inserting or deleting with `supabaseAdmin` for the token's user only, then calling `recalculate_flags`.
+- [x] `public/creditwise-template.csv` with the header row and 2 example rows.
 
 **Step 3: Frontend (Green)**
 
-- [ ] `src/lib/api/transactions.ts` (OP15 to OP19; reads the file with `FileReader` and checks `.csv` and 1 MB before sending).
-- [ ] S8, M3 (both tabs), M4 and the M8 "all transactions" variant, each built to its Stitch row with every state in 7.3.
-- [ ] Flag card on S6, "Delete all transactions" row on S12, badge on TabBar.
+- [x] `src/lib/api/transactions.ts` (OP15 to OP19; reads the file with `FileReader` and checks `.csv` and 1 MB before sending).
+- [x] S8, M3 (both tabs), M4 and the M8 "all transactions" variant, each built to its Stitch row with every state in 7.3.
+- [x] Flag card on S6, "Delete all transactions" row on S12, badge on TabBar.
 
 **Step 4: Refactor and full check**
 
-- [ ] Code cleaned up; no duplicated logic; names use PRD key terms.
-- [ ] Full check passes (lint, type check, every automated test from every phase so far).
-- [ ] `npm run test:e2e -- e2e/02_check_bank_activity.spec.ts` passes.
+- [x] Code cleaned up; no duplicated logic; names use PRD key terms.
+- [x] Full check passes (lint, type check, every automated test from every phase so far).
+- [x] `npm run test:e2e -- e2e/02_check_bank_activity.spec.ts` passes.
 
 **Step 5: Manual checks (human)**
 
@@ -1177,11 +1177,11 @@ All tests in this phase are pgTAP tests in `supabase/tests/`, acting as the seed
 
 **Definition of Done**
 
-- [ ] Every test in Step 1 passes.
-- [ ] All earlier tests still pass.
-- [ ] Every screen in this phase shows all its required states.
+- [x] Every test in Step 1 passes.
+- [x] All earlier tests still pass.
+- [x] Every screen in this phase shows all its required states.
 - [ ] Manual checks are ticked by the human.
-- [ ] Progress log updated (Section 17).
+- [x] Progress log updated (Section 17).
 
 **Commit message:** `Phase 5: Transaction check (F4)`
 
@@ -1541,6 +1541,7 @@ All tests in this phase are pgTAP tests in `supabase/tests/`, acting as the seed
 | Phase 2 | 2026-11-08 | Complete (automated) except T-SEC-10b (Section 18 #11); manual checks pending | 139 of 140 database, 17 unit/component, 2 integration: pass; 1 failing by design question | Phase 2: Data and security | Lint, type check, secret scan clean. Reset + seed run from scratch. **Manual checks for the human:** in Supabase Studio confirm the 9 tables, 4 seed users, profiles, transactions and Thando's 3 flags; RLS shows enabled on every table. |
 | Phase 3 | 2026-11-08 | Complete (automated) except T-SEC-10b (#11) and T-E2E-6 on WebKit (#13); manual checks pending | 63 unit/component, 10 integration, 139 of 140 database; E2E 5 of 6 (Chromium 3/3, WebKit 2/3) | Phase 3: Accounts (F1) | Lint, type check, secret scan clean. Local Auth email_sent limit raised to 100 so test runs are not throttled (hosted setting is separate). **Manual checks for the human:** on a real phone sign up, open the verify email in the local inbox and log in; reset a password from the email link; stay idle 30 minutes and confirm the log-out message; delete a test account and confirm in Studio its rows are gone; compare S2, S3, S4, S11, S12, M7, M9 with their designs. |
 | Phase 4 | 2026-11-08 | Complete (automated) except T-SEC-10b (#11); manual checks pending | 105 unit/component, 15 integration, 139 of 140 database; T-E2E-1 passes in Chromium and WebKit | Phase 4: Money profile and Snapshot (F2, F3) | Lint, type check, secret scan clean. **Manual checks for the human:** on a real phone log in as setup.user, finish S5 with test figures and check S6 with a calculator; compare S6 for Sibusiso and Ayanda with the Red and Green Stitch frames; compare S5, S6, S7, M1, M2, M8 with their designs. |
+| Phase 5 | 2026-11-08 | Complete (automated) except T-SEC-10b (#11); manual checks pending | 142 unit/component, 31 integration, 139 of 140 database; T-E2E-2 passes in Chromium and WebKit | Phase 5: Transaction check (F4) | Lint, type check, secret scan clean. Fixed a fixture generator typo (one invalid date in old-rows.csv). **Manual checks for the human:** download the template, fill 2 months of test activity in Excel, save as CSV and upload on a real phone; check every flag against BR11 to BR13 by hand; compare S8, M3, M4, M8 with their designs. |
 
 ---
 

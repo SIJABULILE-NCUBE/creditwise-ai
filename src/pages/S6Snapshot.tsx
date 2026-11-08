@@ -9,7 +9,9 @@ import { OfflineBanner } from '../components/OfflineBanner';
 import { StatCard } from '../components/StatCard';
 import { StatusPill } from '../components/StatusPill';
 import { Toast } from '../components/Toast';
+import { AlertTriangle, ChevronRight } from 'lucide-react';
 import { getMoneyProfile, type MoneyProfileData } from '../lib/api/moneyProfile';
+import { getOpenFlagCount } from '../lib/api/transactions';
 import { calculateDti, calculateMoneyLeft, calculateRoom, formatDti, getStatusBand, sumOf } from '../lib/calculations';
 import { formatDateTime } from '../lib/dates';
 import { takeFlash } from '../lib/flash';
@@ -26,6 +28,7 @@ export const S6Snapshot: React.FC = () => {
   const [data, setData] = useState<MoneyProfileData | null>(null);
   const [status, setStatus] = useState<'loading' | 'error' | 'ready'>('loading');
   const [toast, setToast] = useState<string | null>(null);
+  const [openFlags, setOpenFlags] = useState(0);
 
   const load = useCallback(async () => {
     setStatus('loading');
@@ -36,6 +39,7 @@ export const S6Snapshot: React.FC = () => {
 
   useEffect(() => {
     void load();
+    void (async () => setOpenFlags((await getOpenFlagCount()) ?? 0))();
     const flash = takeFlash();
     if (flash) setToast(flash);
   }, [load]);
@@ -58,14 +62,14 @@ export const S6Snapshot: React.FC = () => {
             <Button onClick={load}>Try again</Button>
           </div>
         )}
-        {status === 'ready' && data && <Figures data={data} online={online} onAsk={() => navigate('/ask')} />}
+        {status === 'ready' && data && <Figures data={data} online={online} openFlags={openFlags} onAsk={() => navigate('/ask')} onFlags={() => navigate('/transactions?filter=flagged')} />}
       </main>
       {toast && <Toast message={toast} onDismiss={() => setToast(null)} />}
     </>
   );
 };
 
-const Figures: React.FC<{ data: MoneyProfileData; online: boolean; onAsk: () => void }> = ({ data, online, onAsk }) => {
+const Figures: React.FC<{ data: MoneyProfileData; online: boolean; openFlags: number; onAsk: () => void; onFlags: () => void }> = ({ data, online, openFlags, onAsk, onFlags }) => {
   const gross = data.profile.grossIncome as number;
   const net = data.profile.netIncome as number;
   const repayments = sumOf(data.debts, (d) => d.monthly_repayment);
@@ -119,6 +123,14 @@ const Figures: React.FC<{ data: MoneyProfileData; online: boolean; onAsk: () => 
         <StatCard label="Money left" value={moneyLeft} warning={overspent ? "You're spending more than you take home." : undefined} note="What's left from your take-home pay after expenses and debts." />
         <StatCard label="Room" value={room} warning={room === 0 ? 'You have no Room before the Red band.' : undefined} note="How much more you could add in monthly repayments before reaching Red." />
       </div>
+
+      {openFlags > 0 && (
+        <button type="button" onClick={onFlags} className="flex min-h-14 w-full items-center gap-3 rounded-card border border-appBorder bg-surface p-4 text-left text-base text-mainText focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent">
+          <AlertTriangle className="h-6 w-6 shrink-0 text-appWarning" aria-hidden="true" />
+          <span className="flex-1">{`${openFlags} transactions need checking`}</span>
+          <ChevronRight className="h-5 w-5 shrink-0 text-secondaryText" aria-hidden="true" />
+        </button>
+      )}
 
       <Button className="w-full" disabled={!online} onClick={onAsk}>
         Ask about my Snapshot

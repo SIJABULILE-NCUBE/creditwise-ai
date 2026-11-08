@@ -5,6 +5,7 @@ import { S6Snapshot } from '@/pages/S6Snapshot';
 import { renderWithRouter, setOnline } from './helpers';
 import { ayanda, sibusiso, thando } from './fixtures';
 
+vi.mock('@/lib/api/transactions');
 vi.mock('@/lib/api/moneyProfile');
 
 const open = () => render(renderWithRouter(<S6Snapshot />, { path: '/snapshot' }));

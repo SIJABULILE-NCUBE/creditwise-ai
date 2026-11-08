@@ -8,6 +8,8 @@ function parts(value: string | Date) {
       .formatToParts(date)
       .map((p) => [p.type, p.value]),
   );
+  // Node writes September as 'Sept' in en-GB; the PRD uses 3-letter months.
+  map.month = map.month.slice(0, 3);
   return map as Record<'day' | 'month' | 'year' | 'hour' | 'minute', string>;
 }
 
@@ -37,4 +39,9 @@ export function formatPlainDate(date: string): string {
 /** Today's date in SAST as YYYY-MM-DD. */
 export function todaySast(now: Date = new Date()): string {
   return new Intl.DateTimeFormat('en-CA', { timeZone: TIME_ZONE }).format(now);
+}
+
+/** Adds days to a YYYY-MM-DD date. */
+export function addDays(date: string, days: number): string {
+  return new Date(Date.parse(`${date}T00:00:00Z`) + days * 86_400_000).toISOString().slice(0, 10);
 }
