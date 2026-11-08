@@ -1072,23 +1072,23 @@ All tests in this phase are pgTAP tests in `supabase/tests/`, acting as the seed
 | T-EDGE-6 | Component | same | Gross income R1.00 with large repayments shows "999%+"; the real value is kept |
 | T-E2E-1 | E2E | `e2e/01_signup_to_snapshot.spec.ts` | Flow 1: S1 → S2 (opens M9 and closes it) → S3 with verify banner → verify by email link → log in → S5 steps 1 to 3 with Thando's figures → S6 shows 36%, Amber, R1,702.00, R1,000.00 |
 
-- [ ] All tests above are written, run, and fail for the expected reason.
+- [x] All tests above are written, run, and fail for the expected reason.
 
 **Step 2: Backend (Green)**
 
-- [ ] No new migrations expected. `src/lib/api/moneyProfile.ts` implements OP8 to OP14 against the Phase 2 tables. If a test shows a missing database rule, add a new migration (never edit old ones).
+- [x] No new migrations expected. `src/lib/api/moneyProfile.ts` implements OP8 to OP14 against the Phase 2 tables. If a test shows a missing database rule, add a new migration (never edit old ones).
 
 **Step 3: Frontend (Green)**
 
-- [ ] `src/lib/money.ts` (BR1), `src/lib/calculations.ts` (BR4 to BR7), `src/lib/rules/` for income, debt, expense and set-up (BR2, BR3, BR8).
-- [ ] S5 (3 steps, reopens at `setup_step`), S6 (without Flag card and What if button), S7, M1, M2 and M8 (debt and expense variants), each built to its Stitch row with every state in 7.3.
-- [ ] StatCard, StatusPill and MoneyRow components.
+- [x] `src/lib/money.ts` (BR1), `src/lib/calculations.ts` (BR4 to BR7), `src/lib/rules/` for income, debt, expense and set-up (BR2, BR3, BR8).
+- [x] S5 (3 steps, reopens at `setup_step`), S6 (without Flag card and What if button), S7, M1, M2 and M8 (debt and expense variants), each built to its Stitch row with every state in 7.3.
+- [x] StatCard, StatusPill and MoneyRow components.
 
 **Step 4: Refactor and full check**
 
-- [ ] Code cleaned up; no duplicated logic; names use PRD key terms.
-- [ ] Full check passes (lint, type check, every automated test from every phase so far).
-- [ ] `npm run test:e2e -- e2e/01_signup_to_snapshot.spec.ts` passes.
+- [x] Code cleaned up; no duplicated logic; names use PRD key terms.
+- [x] Full check passes (lint, type check, every automated test from every phase so far).
+- [x] `npm run test:e2e -- e2e/01_signup_to_snapshot.spec.ts` passes.
 
 **Step 5: Manual checks (human)**
 
@@ -1098,11 +1098,11 @@ All tests in this phase are pgTAP tests in `supabase/tests/`, acting as the seed
 
 **Definition of Done**
 
-- [ ] Every test in Step 1 passes.
-- [ ] All earlier tests still pass.
-- [ ] Every screen in this phase shows all its required states.
+- [x] Every test in Step 1 passes.
+- [x] All earlier tests still pass.
+- [x] Every screen in this phase shows all its required states.
 - [ ] Manual checks are ticked by the human.
-- [ ] Progress log updated (Section 17).
+- [x] Progress log updated (Section 17).
 
 **Commit message:** `Phase 4: Money profile and Snapshot (F2, F3)`
 
@@ -1540,6 +1540,7 @@ All tests in this phase are pgTAP tests in `supabase/tests/`, acting as the seed
 | Phase 1 | 2026-11-08 | Complete (automated); manual checks pending | 17 unit/component, 1 integration, 1 database (T-SETUP-2), 2 E2E (Chromium, WebKit): all pass | Phase 1: Foundation | Lint, type check and secret scan clean. Modal and ConfirmModal now use the real `tablet:` breakpoint; README written. **Manual checks for the human:** S1 on a real phone against Stitch row S1; S1 side by side with its design (these had been ticked without a human check, so they were unticked). `git status` does not show .env (agent-checked). Versions: React 19.0.0, Vite 6.2.0, React Router 7.3.0, TypeScript 5.7.3, Tailwind CSS 3.4.17, Vitest 3.0.7, Playwright 1.50.1, Express 5.0.1, @supabase/supabase-js 2.49.1 |
 | Phase 2 | 2026-11-08 | Complete (automated) except T-SEC-10b (Section 18 #11); manual checks pending | 139 of 140 database, 17 unit/component, 2 integration: pass; 1 failing by design question | Phase 2: Data and security | Lint, type check, secret scan clean. Reset + seed run from scratch. **Manual checks for the human:** in Supabase Studio confirm the 9 tables, 4 seed users, profiles, transactions and Thando's 3 flags; RLS shows enabled on every table. |
 | Phase 3 | 2026-11-08 | Complete (automated) except T-SEC-10b (#11) and T-E2E-6 on WebKit (#13); manual checks pending | 63 unit/component, 10 integration, 139 of 140 database; E2E 5 of 6 (Chromium 3/3, WebKit 2/3) | Phase 3: Accounts (F1) | Lint, type check, secret scan clean. Local Auth email_sent limit raised to 100 so test runs are not throttled (hosted setting is separate). **Manual checks for the human:** on a real phone sign up, open the verify email in the local inbox and log in; reset a password from the email link; stay idle 30 minutes and confirm the log-out message; delete a test account and confirm in Studio its rows are gone; compare S2, S3, S4, S11, S12, M7, M9 with their designs. |
+| Phase 4 | 2026-11-08 | Complete (automated) except T-SEC-10b (#11); manual checks pending | 105 unit/component, 15 integration, 139 of 140 database; T-E2E-1 passes in Chromium and WebKit | Phase 4: Money profile and Snapshot (F2, F3) | Lint, type check, secret scan clean. **Manual checks for the human:** on a real phone log in as setup.user, finish S5 with test figures and check S6 with a calculator; compare S6 for Sibusiso and Ayanda with the Red and Green Stitch frames; compare S5, S6, S7, M1, M2, M8 with their designs. |
 
 ---
 
