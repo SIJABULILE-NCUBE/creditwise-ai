@@ -12,6 +12,7 @@ import { S5SetUp } from './pages/S5SetUp';
 import { S6Snapshot } from './pages/S6Snapshot';
 import { S7MyMoney } from './pages/S7MyMoney';
 import { S8Transactions } from './pages/S8Transactions';
+import { S9AskCreditWise } from './pages/S9AskCreditWise';
 import { S11SetNewPassword } from './pages/S11SetNewPassword';
 import { S12Account } from './pages/S12Account';
 
@@ -72,7 +73,7 @@ const AppRoutes: React.FC = () => (
         <Route path="/snapshot" element={<S6Snapshot />} />
         <Route path="/my-money" element={<S7MyMoney />} />
         <Route path="/transactions" element={<S8Transactions />} />
-        <Route path="/ask" element={<TabPlaceholder title="Ask CreditWise" />} />
+        <Route path="/ask" element={<S9AskCreditWise />} />
         <Route path="/get-ready" element={<TabPlaceholder title="Get Ready" />} />
         <Route path="/account" element={<S12Account />} />
       </Route>

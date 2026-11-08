@@ -1,5 +1,6 @@
 import express, { type NextFunction, type Request, type Response } from 'express';
 import { accountRouter } from './routes/account.js';
+import { askRouter } from './routes/ask.js';
 import { transactionsRouter } from './routes/transactions.js';
 import { CSV_MESSAGES } from './lib/csv.js';
 import { MESSAGES } from '../src/lib/messages.js';
@@ -9,6 +10,7 @@ const app = express();
 app.use(express.json({ limit: '1.5mb' }));
 
 app.use('/api/account', accountRouter);
+app.use('/api/ask', askRouter);
 app.use('/api/transactions', transactionsRouter);
 
 // JSON 404 handler for unknown routes

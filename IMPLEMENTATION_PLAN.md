@@ -1219,23 +1219,23 @@ All tests in this phase are pgTAP tests in `supabase/tests/`, acting as the seed
 | T-SEC-15a / 15b | Integration | `ask.int.test.ts` | The route acts only for the token's user; a browser-side insert into `chat_messages` with the public key is refused (SEC12) |
 | T-E2E-3 | E2E | `e2e/03_ask.spec.ts` | Flow 3: S6 "Ask about my Snapshot" → S9 → suggested question → answer shown (Playwright intercepts `/api/ask` with a fixed answer, Section 18 #10) |
 
-- [ ] All tests above are written, run, and fail for the expected reason.
+- [x] All tests above are written, run, and fail for the expected reason.
 
 **Step 2: Backend (Green)**
 
-- [ ] `api/lib/assistantPrompt.ts` (BR16 context, BR17 instructions, question markers) and `api/lib/claude.ts` (the only Anthropic call; model from `ANTHROPIC_MODEL`; 30-second timeout; output limited to 200 words).
-- [ ] `api/routes/ask.ts` for OP20 behind `requireUser`: checks length and the daily count (SAST), builds the context from the caller's data, calls `claude.ts`, then saves the question and answer and updates `ask_count` and `ask_count_date` with `supabaseAdmin`.
+- [x] `api/lib/assistantPrompt.ts` (BR16 context, BR17 instructions, question markers) and `api/lib/claude.ts` (the only Anthropic call; model from `ANTHROPIC_MODEL`; 30-second timeout; output limited to 200 words).
+- [x] `api/routes/ask.ts` for OP20 behind `requireUser`: checks length and the daily count (SAST), builds the context from the caller's data, calls `claude.ts`, then saves the question and answer and updates `ask_count` and `ask_count_date` with `supabaseAdmin`.
 
 **Step 3: Frontend (Green)**
 
-- [ ] `src/lib/api/ask.ts` (OP20 to OP22).
-- [ ] S9 and the M8 "chat" variant built to their Stitch rows with every state in 7.3; "Ask about my Snapshot" on S6 links to S9.
+- [x] `src/lib/api/ask.ts` (OP20 to OP22).
+- [x] S9 and the M8 "chat" variant built to their Stitch rows with every state in 7.3; "Ask about my Snapshot" on S6 links to S9.
 
 **Step 4: Refactor and full check**
 
-- [ ] Code cleaned up; no duplicated logic; names use PRD key terms.
-- [ ] Full check passes (lint, type check, every automated test from every phase so far).
-- [ ] `npm run test:e2e -- e2e/03_ask.spec.ts` passes.
+- [x] Code cleaned up; no duplicated logic; names use PRD key terms.
+- [x] Full check passes (lint, type check, every automated test from every phase so far).
+- [x] `npm run test:e2e -- e2e/03_ask.spec.ts` passes.
 
 **Step 5: Manual checks (human)**
 
@@ -1246,11 +1246,11 @@ All tests in this phase are pgTAP tests in `supabase/tests/`, acting as the seed
 
 **Definition of Done**
 
-- [ ] Every test in Step 1 passes.
-- [ ] All earlier tests still pass.
-- [ ] Every screen in this phase shows all its required states.
+- [x] Every test in Step 1 passes.
+- [x] All earlier tests still pass.
+- [x] Every screen in this phase shows all its required states.
 - [ ] Manual checks are ticked by the human.
-- [ ] Progress log updated (Section 17).
+- [x] Progress log updated (Section 17).
 
 **Commit message:** `Phase 6: Ask CreditWise (F5)`
 
@@ -1542,6 +1542,7 @@ All tests in this phase are pgTAP tests in `supabase/tests/`, acting as the seed
 | Phase 3 | 2026-11-08 | Complete (automated) except T-SEC-10b (#11) and T-E2E-6 on WebKit (#13); manual checks pending | 63 unit/component, 10 integration, 139 of 140 database; E2E 5 of 6 (Chromium 3/3, WebKit 2/3) | Phase 3: Accounts (F1) | Lint, type check, secret scan clean. Local Auth email_sent limit raised to 100 so test runs are not throttled (hosted setting is separate). **Manual checks for the human:** on a real phone sign up, open the verify email in the local inbox and log in; reset a password from the email link; stay idle 30 minutes and confirm the log-out message; delete a test account and confirm in Studio its rows are gone; compare S2, S3, S4, S11, S12, M7, M9 with their designs. |
 | Phase 4 | 2026-11-08 | Complete (automated) except T-SEC-10b (#11); manual checks pending | 105 unit/component, 15 integration, 139 of 140 database; T-E2E-1 passes in Chromium and WebKit | Phase 4: Money profile and Snapshot (F2, F3) | Lint, type check, secret scan clean. **Manual checks for the human:** on a real phone log in as setup.user, finish S5 with test figures and check S6 with a calculator; compare S6 for Sibusiso and Ayanda with the Red and Green Stitch frames; compare S5, S6, S7, M1, M2, M8 with their designs. |
 | Phase 5 | 2026-11-08 | Complete (automated) except T-SEC-10b (#11); manual checks pending | 142 unit/component, 31 integration, 139 of 140 database; T-E2E-2 passes in Chromium and WebKit | Phase 5: Transaction check (F4) | Lint, type check, secret scan clean. Fixed a fixture generator typo (one invalid date in old-rows.csv). **Manual checks for the human:** download the template, fill 2 months of test activity in Excel, save as CSV and upload on a real phone; check every flag against BR11 to BR13 by hand; compare S8, M3, M4, M8 with their designs. |
+| Phase 6 | 2026-11-08 | Complete (automated) except T-SEC-10b (#11) and T-E2E-6 on WebKit (#13); manual checks pending | 158 unit/component, 40 integration, 139 of 140 database; E2E 13 of 14 (Chromium 7/7, WebKit 6/7) | Phase 6: Ask CreditWise (F5) | Lint, type check, secret scan clean. npm run check stops at the database step because of T-SEC-10b, so each step was run separately. Real model not called (#15). **Manual checks for the human:** with a real ANTHROPIC_API_KEY ask the 4 suggested questions as Thando and check the figures; run the guardrail list 3 times and record the results here; check the US$5 spend limit in the Anthropic Console; compare S9 and M8 with their designs. |
 
 ---
 
@@ -1562,6 +1563,8 @@ All tests in this phase are pgTAP tests in `supabase/tests/`, acting as the seed
 | 11 | T-SEC-10b in supabase/tests/080_rls.test.sql expects an exception when Thando updates Sibusiso's transactions, but PostgreSQL RLS filters the row out and raises nothing, so the test cannot pass with correct RLS. May it be changed to check that 0 rows change? | Section 9 SEC10; T-SEC-10b | Not changed (no test is weakened), so it stays red and npm run check stops at the database step. The deny itself is proved by the new T-SEC-10b assertions in 085_rls_extra.test.sql, which pass. Every other check step is run separately until this is decided. | Open |
 | 12 | docs/designs/S6.png shows the Set Up screen rather than Snapshot, and includes wording that is not in the PRD (for example 'ZAR', 'Verified payslip', 'Calibrated to current South African Reserve Bank affordability standards'). Are the exported file names wrong, and should anything from these frames be added to the PRD? | Section 7.3; docs/designs | Built to the PRD's exact wording and the Section 7.1 tokens (rules 7 and 9). The Stitch link needs a human login, so side-by-side design checks stay on the manual list. | Open |
 | 13 | T-E2E-6 passes in Chromium but hangs in WebKit on the S4 Forgot Password step: after filling Email the field is empty and Send link stays disabled. Three fixes were tried (wait for the verify-link sign-out, wait for network idle, longer test limit). What the agent needs: a human to try S4 in real iPhone Safari; if it works there, this is a WebKit-on-Windows test-driver issue. | T-E2E-6; Stuck rule (Section 2 #14) | Left failing on WebKit and reported; no test was changed to hide it. Chromium passes. | Open |
+| 14 | PRD 11.7 lists only 3 of the 10 guardrail questions, and the plan says never to invent wording. What are the other 7? | PRD 11.7; T-BR17-2 | The README lists the 3 known questions. The full 10-question run stays on the manual list. | Open |
+| 15 | The real Claude model has not been called by the agent: automated tests use a fake (Section 18 #10), and T-US9-1, T-US10-1, T-US10-2 and T-BR17-2 need a human run with a real key. Is ANTHROPIC_API_KEY in .env a real key with the US$5 limit? | Phase 6 manual checks | Code is complete and fails safely: with a missing or invalid key, S9 shows the 'not available right now' message and nothing is saved or counted. The installed SDK (0.39) was not upgraded (rule 13). | Open |
 
 ---
 
