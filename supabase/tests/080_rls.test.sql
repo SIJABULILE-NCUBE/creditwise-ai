@@ -100,10 +100,10 @@ select throws_ok(
 );
 
 -- T-SEC-10b: Thando cannot update Sibusiso transactions
-select throws_ok(
-  $$ update public.transactions set flag_status = 'dismissed' where user_id = '00000000-0000-0000-0000-000000000002' $$,
-  null,
-  'T-SEC-10b Thando cannot update Sibusiso transactions'
+select results_eq(
+  $$ with changed as (update public.transactions set flag_status = 'dismissed' where user_id = '00000000-0000-0000-0000-000000000002' returning 1) select count(*)::bigint from changed $$,
+  array[0::bigint],
+  'T-SEC-10b Thando''s update changes 0 of Sibusiso''s transactions'
 );
 
 -- T-SEC-11a: Thando can read own chat_messages

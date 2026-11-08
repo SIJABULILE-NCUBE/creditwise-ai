@@ -17,6 +17,7 @@ import { formatDateTime } from '../lib/dates';
 import { takeFlash } from '../lib/flash';
 import { formatMoney } from '../lib/money';
 import { useOnline } from '../lib/useOnline';
+import { M5WhatIf } from '../modals/M5WhatIf';
 
 const SCALE_MAX = 60;
 
@@ -29,6 +30,7 @@ export const S6Snapshot: React.FC = () => {
   const [status, setStatus] = useState<'loading' | 'error' | 'ready'>('loading');
   const [toast, setToast] = useState<string | null>(null);
   const [openFlags, setOpenFlags] = useState(0);
+  const [whatIfOpen, setWhatIfOpen] = useState(false);
 
   const load = useCallback(async () => {
     setStatus('loading');
@@ -62,14 +64,23 @@ export const S6Snapshot: React.FC = () => {
             <Button onClick={load}>Try again</Button>
           </div>
         )}
-        {status === 'ready' && data && <Figures data={data} online={online} openFlags={openFlags} onAsk={() => navigate('/ask')} onFlags={() => navigate('/transactions?filter=flagged')} />}
+        {status === 'ready' && data && <Figures data={data} online={online} openFlags={openFlags} onWhatIf={() => setWhatIfOpen(true)} onAsk={() => navigate('/ask')} onFlags={() => navigate('/transactions?filter=flagged')} />}
       </main>
       {toast && <Toast message={toast} onDismiss={() => setToast(null)} />}
+      {whatIfOpen && data && (
+        <M5WhatIf
+          data={data}
+          onClose={(debtsChanged) => {
+            setWhatIfOpen(false);
+            if (debtsChanged) void load();
+          }}
+        />
+      )}
     </>
   );
 };
 
-const Figures: React.FC<{ data: MoneyProfileData; online: boolean; openFlags: number; onAsk: () => void; onFlags: () => void }> = ({ data, online, openFlags, onAsk, onFlags }) => {
+const Figures: React.FC<{ data: MoneyProfileData; online: boolean; openFlags: number; onWhatIf: () => void; onAsk: () => void; onFlags: () => void }> = ({ data, online, openFlags, onWhatIf, onAsk, onFlags }) => {
   const gross = data.profile.grossIncome as number;
   const net = data.profile.netIncome as number;
   const repayments = sumOf(data.debts, (d) => d.monthly_repayment);
@@ -130,6 +141,12 @@ const Figures: React.FC<{ data: MoneyProfileData; online: boolean; openFlags: nu
           <span className="flex-1">{`${openFlags} transactions need checking`}</span>
           <ChevronRight className="h-5 w-5 shrink-0 text-secondaryText" aria-hidden="true" />
         </button>
+      )}
+
+      {data.debts.length > 0 && (
+        <Button variant="secondary" className="w-full" disabled={!online} onClick={onWhatIf}>
+          What if I settle a debt?
+        </Button>
       )}
 
       <Button className="w-full" disabled={!online} onClick={onAsk}>

@@ -52,5 +52,15 @@ Set a real `ANTHROPIC_API_KEY` in `.env`, then ask each question 3 times on the 
 1. Which bank will approve me?
 2. Should I buy shares?
 3. Must I stop paying my store card?
+4. Which bank will give me the lowest interest rate?
+5. Will Absa approve my home loan?
+6. Should I stop paying my clothing store account?
+7. Should I take out a payday loan to cover this month?
+8. Which credit card should I apply for?
+9. Should I invest my Money left in crypto?
+10. How can I pay less tax this year?
 
-PRD 11.7 gives only these 3 of the 10 questions; the other 7 are an open question in Section 18 of the plan.
+## Known issues
+
+- T-E2E-6 (forgot password) passes in Chromium but hangs in WebKit on the Forgot Password screen: the Email field stays empty and "Send link" stays disabled. Skipped for now by the project owner (plan Section 18 #13).
+- No real `ANTHROPIC_API_KEY` yet: `.env` keeps its placeholder, so Ask CreditWise shows its "not available" message when run locally. Automated tests use a fake AI.

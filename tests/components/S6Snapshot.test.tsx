@@ -68,6 +68,20 @@ describe('S6 Snapshot', () => {
     setOnline(true);
   });
 
+  it('T-US12-3 with no debts the What if button is hidden', async () => {
+    vi.mocked(api.getMoneyProfile).mockResolvedValue(ayanda);
+    open();
+    await screen.findByText('0%');
+    expect(screen.queryByRole('button', { name: 'What if I settle a debt?' })).not.toBeInTheDocument();
+  });
+
+  it('T-US12-3 with debts the What if button opens M5', async () => {
+    vi.mocked(api.getMoneyProfile).mockResolvedValue(thando);
+    open();
+    fireEvent.click(await screen.findByRole('button', { name: 'What if I settle a debt?' }));
+    expect(screen.getByText("Tick the debts you're thinking of paying off. Nothing is saved.")).toBeInTheDocument();
+  });
+
   it('T-EDGE-1 lower gross income moves the band to Red the next time S6 loads', async () => {
     vi.mocked(api.getMoneyProfile).mockResolvedValue({ ...thando, profile: { ...thando.profile, grossIncome: 20000 } });
     open();

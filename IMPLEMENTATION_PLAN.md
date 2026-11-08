@@ -1285,23 +1285,23 @@ All tests in this phase are pgTAP tests in `supabase/tests/`, acting as the seed
 | T-E2E-4 | E2E | `e2e/04_what_if.spec.ts` | Flow 4: Sibusiso opens M5, ticks Store accounts A and B, closes; deletes Store account A on S7 through M1 and M8; S6 shows the new DTI |
 | T-E2E-5 | E2E | `e2e/05_get_ready.spec.ts` | Flow 5: S10 → "Vehicle finance" → tick 2 items → close → card shows "2 of 6 done" |
 
-- [ ] All tests above are written, run, and fail for the expected reason.
+- [x] All tests above are written, run, and fail for the expected reason.
 
 **Step 2: Backend (Green)**
 
-- [ ] No new migrations expected (guides and checklist items were loaded in Phase 2). `src/lib/api/guides.ts` implements OP23 to OP25.
+- [x] No new migrations expected (guides and checklist items were loaded in Phase 2). `src/lib/api/guides.ts` implements OP23 to OP25.
 
 **Step 3: Frontend (Green)**
 
-- [ ] `calculateWhatIf` in `src/lib/calculations.ts` (BR18) and `src/lib/rules/checklist.ts` (BR19).
-- [ ] S10, M6 and M5 built to their Stitch rows with every state in 7.3; the "What if I settle a debt?" button on S6 (hidden with 0 debts). M5 re-reads the debts on each tick to detect changes (T-EDGE-2).
-- [ ] GuideCard component.
+- [x] `calculateWhatIf` in `src/lib/calculations.ts` (BR18) and `src/lib/rules/checklist.ts` (BR19).
+- [x] S10, M6 and M5 built to their Stitch rows with every state in 7.3; the "What if I settle a debt?" button on S6 (hidden with 0 debts). M5 re-reads the debts on each tick to detect changes (T-EDGE-2).
+- [x] GuideCard component.
 
 **Step 4: Refactor and full check**
 
-- [ ] Code cleaned up; no duplicated logic; names use PRD key terms.
-- [ ] Full check passes (lint, type check, every automated test from every phase so far).
-- [ ] `npm run test:e2e -- e2e/04_what_if.spec.ts e2e/05_get_ready.spec.ts` passes.
+- [x] Code cleaned up; no duplicated logic; names use PRD key terms.
+- [x] Full check passes (lint, type check, every automated test from every phase so far).
+- [x] `npm run test:e2e -- e2e/04_what_if.spec.ts e2e/05_get_ready.spec.ts` passes.
 
 **Step 5: Manual checks (human)**
 
@@ -1311,11 +1311,11 @@ All tests in this phase are pgTAP tests in `supabase/tests/`, acting as the seed
 
 **Definition of Done**
 
-- [ ] Every test in Step 1 passes.
-- [ ] All earlier tests still pass.
-- [ ] Every screen in this phase shows all its required states.
+- [x] Every test in Step 1 passes.
+- [x] All earlier tests still pass.
+- [x] Every screen in this phase shows all its required states.
 - [ ] Manual checks are ticked by the human.
-- [ ] Progress log updated (Section 17).
+- [x] Progress log updated (Section 17).
 
 **Commit message:** `Phase 7: Get ready and What if (F6, F7)`
 
@@ -1543,6 +1543,7 @@ All tests in this phase are pgTAP tests in `supabase/tests/`, acting as the seed
 | Phase 4 | 2026-11-08 | Complete (automated) except T-SEC-10b (#11); manual checks pending | 105 unit/component, 15 integration, 139 of 140 database; T-E2E-1 passes in Chromium and WebKit | Phase 4: Money profile and Snapshot (F2, F3) | Lint, type check, secret scan clean. **Manual checks for the human:** on a real phone log in as setup.user, finish S5 with test figures and check S6 with a calculator; compare S6 for Sibusiso and Ayanda with the Red and Green Stitch frames; compare S5, S6, S7, M1, M2, M8 with their designs. |
 | Phase 5 | 2026-11-08 | Complete (automated) except T-SEC-10b (#11); manual checks pending | 142 unit/component, 31 integration, 139 of 140 database; T-E2E-2 passes in Chromium and WebKit | Phase 5: Transaction check (F4) | Lint, type check, secret scan clean. Fixed a fixture generator typo (one invalid date in old-rows.csv). **Manual checks for the human:** download the template, fill 2 months of test activity in Excel, save as CSV and upload on a real phone; check every flag against BR11 to BR13 by hand; compare S8, M3, M4, M8 with their designs. |
 | Phase 6 | 2026-11-08 | Complete (automated) except T-SEC-10b (#11) and T-E2E-6 on WebKit (#13); manual checks pending | 158 unit/component, 40 integration, 139 of 140 database; E2E 13 of 14 (Chromium 7/7, WebKit 6/7) | Phase 6: Ask CreditWise (F5) | Lint, type check, secret scan clean. npm run check stops at the database step because of T-SEC-10b, so each step was run separately. Real model not called (#15). **Manual checks for the human:** with a real ANTHROPIC_API_KEY ask the 4 suggested questions as Thando and check the figures; run the guardrail list 3 times and record the results here; check the US$5 spend limit in the Anthropic Console; compare S9 and M8 with their designs. |
+| Phase 7 | 2026-11-08 | Complete (automated) with 1 known issue; manual checks pending | 180 unit/component, 42 integration, 140 of 140 database; E2E 17 of 18 (Chromium 9/9, WebKit 8/9) | Phase 7: Get ready and What if (F6, F7) | npm run check passes in full now that T-SEC-10b checks for 0 rows changed (Section 18 #11). **Known issue:** T-E2E-6 still hangs on WebKit on the Forgot Password screen; skipped for now by the project owner (Section 18 #13, README). No real ANTHROPIC_API_KEY yet, so the Phase 6 real-model checks remain pending (#15). T-E2E-4 and T-E2E-5 use new users with Sibusiso's figures and no ticks, so they do not change the seed data. **Manual checks for the human:** read all 3 guides on a real phone and compare them with docs/content/guides.md word for word; check the M5 figures for Sibusiso with a calculator; compare S10, M6 and M5 with their designs.
 
 ---
 
@@ -1560,11 +1561,11 @@ All tests in this phase are pgTAP tests in `supabase/tests/`, acting as the seed
 | 8 | PRD 8.4 names only some of Thando's 62 and Sibusiso's 40 seed transactions, and E2E tests need a confirmed account that has not finished set-up. | PRD 8.4, 10.4; Section 8.7 | The other rows are ordinary spending rows in the fixture files, chosen so they trigger no flags (T-DB-4 checks Thando has exactly 3 open flags and Sibusiso exactly 1). A 4th test account, setup.user@example.com, is added for tests only. PRD v0.4 Section 10.4 updated. | Answered |
 | 9 | S3's "Resend email" can be used once every 60 seconds, but the PRD gives no wording for a second tap within 60 seconds. | PRD 5, 8.2 S3; T-AUTH-3 | The link is disabled for 60 seconds after use; no extra message. PRD v0.4 S3 spec updated. | Answered |
 | 10 | Automated tests must not call the real Claude model (cost, and answers vary). How are US9 and US10 tested? | PRD 11.7; Phase 6 | Integration and E2E tests replace the AI with a fixed fake answer. The real model is checked by hand with the guardrail list (T-BR17-2), as PRD 11.7 already says. No PRD change needed. | Answered |
-| 11 | T-SEC-10b in supabase/tests/080_rls.test.sql expects an exception when Thando updates Sibusiso's transactions, but PostgreSQL RLS filters the row out and raises nothing, so the test cannot pass with correct RLS. May it be changed to check that 0 rows change? | Section 9 SEC10; T-SEC-10b | Not changed (no test is weakened), so it stays red and npm run check stops at the database step. The deny itself is proved by the new T-SEC-10b assertions in 085_rls_extra.test.sql, which pass. Every other check step is run separately until this is decided. | Open |
-| 12 | docs/designs/S6.png shows the Set Up screen rather than Snapshot, and includes wording that is not in the PRD (for example 'ZAR', 'Verified payslip', 'Calibrated to current South African Reserve Bank affordability standards'). Are the exported file names wrong, and should anything from these frames be added to the PRD? | Section 7.3; docs/designs | Built to the PRD's exact wording and the Section 7.1 tokens (rules 7 and 9). The Stitch link needs a human login, so side-by-side design checks stay on the manual list. | Open |
-| 13 | T-E2E-6 passes in Chromium but hangs in WebKit on the S4 Forgot Password step: after filling Email the field is empty and Send link stays disabled. Three fixes were tried (wait for the verify-link sign-out, wait for network idle, longer test limit). What the agent needs: a human to try S4 in real iPhone Safari; if it works there, this is a WebKit-on-Windows test-driver issue. | T-E2E-6; Stuck rule (Section 2 #14) | Left failing on WebKit and reported; no test was changed to hide it. Chromium passes. | Open |
-| 14 | PRD 11.7 lists only 3 of the 10 guardrail questions, and the plan says never to invent wording. What are the other 7? | PRD 11.7; T-BR17-2 | The README lists the 3 known questions. The full 10-question run stays on the manual list. | Open |
-| 15 | The real Claude model has not been called by the agent: automated tests use a fake (Section 18 #10), and T-US9-1, T-US10-1, T-US10-2 and T-BR17-2 need a human run with a real key. Is ANTHROPIC_API_KEY in .env a real key with the US$5 limit? | Phase 6 manual checks | Code is complete and fails safely: with a missing or invalid key, S9 shows the 'not available right now' message and nothing is saved or counted. The installed SDK (0.39) was not upgraded (rule 13). | Open |
+| 11 | T-SEC-10b in supabase/tests/080_rls.test.sql expects an exception when Thando updates Sibusiso's transactions, but PostgreSQL RLS filters the row out and raises nothing, so the test cannot pass with correct RLS. May it be changed to check that 0 rows change? | Section 9 SEC10; T-SEC-10b | Yes. T-SEC-10b now checks that 0 rows change, which is the correct RLS behaviour. | Answered |
+| 12 | docs/designs/S6.png shows the Set Up screen rather than Snapshot, and includes wording that is not in the PRD (for example 'ZAR', 'Verified payslip', 'Calibrated to current South African Reserve Bank affordability standards'). Are the exported file names wrong, and should anything from these frames be added to the PRD? | Section 7.3; docs/designs | The PRD wording wins. The project owner will check the S5 and S6 image names. | Answered |
+| 13 | T-E2E-6 passes in Chromium but hangs in WebKit on the S4 Forgot Password step: after filling Email the field is empty and Send link stays disabled. Three fixes were tried (wait for the verify-link sign-out, wait for network idle, longer test limit). What the agent needs: a human to try S4 in real iPhone Safari; if it works there, this is a WebKit-on-Windows test-driver issue. | T-E2E-6; Stuck rule (Section 2 #14) | Skipped for now. Recorded as a known issue in the README and the Progress log. | Answered |
+| 14 | PRD 11.7 lists only 3 of the 10 guardrail questions, and the plan says never to invent wording. What are the other 7? | PRD 11.7; T-BR17-2 | The project owner supplied the other 7 questions; all 10 are in the README. | Answered |
+| 15 | The real Claude model has not been called by the agent: automated tests use a fake (Section 18 #10), and T-US9-1, T-US10-1, T-US10-2 and T-BR17-2 need a human run with a real key. Is ANTHROPIC_API_KEY in .env a real key with the US$5 limit? | Phase 6 manual checks | No real key yet. Keep the placeholder and the fake AI for tests. | Answered |
 
 ---
 

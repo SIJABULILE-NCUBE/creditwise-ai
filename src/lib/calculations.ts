@@ -33,3 +33,31 @@ export function formatDti(dti: number): string {
 export function sumOf<T>(items: T[], amount: (item: T) => number): number {
   return items.reduce((total, item) => total + cents(amount(item)), 0) / 100;
 }
+
+export interface SnapshotFigures {
+  dti: number;
+  band: StatusBand;
+  moneyLeft: number;
+  room: number;
+}
+
+export interface WhatIfInput {
+  grossIncome: number;
+  netIncome: number;
+  totalExpenses: number;
+  debts: { id: string; monthly_repayment: number }[];
+}
+
+function figuresFor(input: WhatIfInput, repayments: number): SnapshotFigures {
+  const dti = calculateDti(repayments, input.grossIncome);
+  return { dti, band: getStatusBand(dti), moneyLeft: calculateMoneyLeft(input.netIncome, input.totalExpenses, repayments), room: calculateRoom(input.grossIncome, repayments) };
+}
+
+/** BR18: the figures now, and as if the ticked debts' repayments were R0.00. Nothing is saved. */
+export function calculateWhatIf(input: WhatIfInput, tickedDebtIds: string[]): { before: SnapshotFigures; after: SnapshotFigures } {
+  const remaining = input.debts.filter((debt) => !tickedDebtIds.includes(debt.id));
+  return {
+    before: figuresFor(input, sumOf(input.debts, (d) => d.monthly_repayment)),
+    after: figuresFor(input, sumOf(remaining, (d) => d.monthly_repayment)),
+  };
+}

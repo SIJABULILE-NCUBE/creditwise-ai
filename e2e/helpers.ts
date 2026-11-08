@@ -55,15 +55,25 @@ export async function signUpAndVerify(page: Page, request: APIRequestContext, em
 }
 
 /** Finishes a new user's money profile through the public API, using only their own login. */
-export async function completeProfile(email: string, password: string) {
+export async function completeProfile(email: string, password: string, income = { gross: 10000, net: 9000 }) {
   const client = createClient(process.env.VITE_SUPABASE_URL!, process.env.VITE_SUPABASE_ANON_KEY!, {
     auth: { persistSession: false, autoRefreshToken: false },
   });
   const signIn = await client.auth.signInWithPassword({ email, password });
   expect(signIn.error).toBeNull();
   const userId = signIn.data.user!.id;
-  await client.from('money_profiles').update({ gross_income: 10000, net_income: 9000, has_no_debts: true }).eq('user_id', userId);
+  await client.from('money_profiles').update({ gross_income: income.gross, net_income: income.net, has_no_debts: true }).eq('user_id', userId);
   await client.from('expenses').insert({ name: 'Rent', category: 'Housing', monthly_amount: 1000 });
   const done = await client.from('money_profiles').update({ completed_at: new Date().toISOString() }).eq('user_id', userId);
   expect(done.error).toBeNull();
+}
+
+/** Adds debts for a new user through the public API, using only their own login. */
+export async function addDebts(email: string, password: string, debts: { name: string; type: string; monthly_repayment: number }[]) {
+  const client = createClient(process.env.VITE_SUPABASE_URL!, process.env.VITE_SUPABASE_ANON_KEY!, {
+    auth: { persistSession: false, autoRefreshToken: false },
+  });
+  await client.auth.signInWithPassword({ email, password });
+  const { error } = await client.from('debts').insert(debts);
+  expect(error).toBeNull();
 }
