@@ -7,7 +7,6 @@ import { MESSAGES } from '../../src/lib/messages.js';
 import { validateManualTransaction } from '../../src/lib/rules/transaction.js';
 
 export const transactionsRouter = Router();
-const DELETE_FAILED = "We couldn't delete that. Try again.";
 
 // Every query below is scoped to res.locals.userId, from the checked token (SEC16).
 transactionsRouter.post('/import', requireUser, async (req, res) => {
@@ -79,7 +78,7 @@ transactionsRouter.post('/', requireUser, async (req, res) => {
 transactionsRouter.delete('/', requireUser, async (_req, res) => {
   const { error } = await supabaseAdmin().from('transactions').delete().eq('user_id', res.locals.userId);
   if (error) {
-    res.status(500).json({ error: DELETE_FAILED });
+    res.status(500).json({ error: MESSAGES.deleteFailed });
     return;
   }
   res.status(204).end();

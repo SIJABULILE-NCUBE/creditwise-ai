@@ -1,4 +1,5 @@
 import { addDays } from '../dates.js';
+import { MESSAGES } from '../messages.js';
 
 export interface ManualTransaction {
   date: string;
@@ -16,13 +17,13 @@ export interface ManualTransactionErrors {
 export function validateManualTransaction(input: ManualTransaction, today: string): ManualTransactionErrors {
   const errors: ManualTransactionErrors = {};
   if (!/^\d{4}-\d{2}-\d{2}$/.test(input.date) || input.date > today || input.date < addDays(today, -90)) {
-    errors.date = 'Choose a date in the last 90 days.';
+    errors.date = MESSAGES.transactionDate;
   }
   if (input.description.length < 1 || input.description.length > 80) {
-    errors.description = 'Enter a description of up to 80 characters.';
+    errors.description = MESSAGES.transactionDescription;
   }
   if (input.amount === null || input.amount < 0.01 || input.amount > 1_000_000) {
-    errors.amount = 'Enter an amount from R0.01 to R1,000,000.00.';
+    errors.amount = MESSAGES.transactionAmount;
   }
   return errors;
 }

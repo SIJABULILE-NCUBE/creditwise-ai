@@ -1,4 +1,5 @@
 import { supabase } from '../supabase';
+import { mapDbError } from '../errors';
 import type { SaveResult } from './moneyProfile';
 
 /** OP23 to OP25. */
@@ -66,5 +67,5 @@ export async function setTick(itemId: string, ticked: boolean): Promise<SaveResu
   const { error } = ticked
     ? await supabase.from('checklist_ticks').insert({ item_id: itemId })
     : await supabase.from('checklist_ticks').delete().eq('item_id', itemId);
-  return error ? { ok: false, error: "We couldn't save that tick. Try again." } : { ok: true };
+  return error ? { ok: false, error: mapDbError(error, "We couldn't save that tick. Try again.") } : { ok: true };
 }

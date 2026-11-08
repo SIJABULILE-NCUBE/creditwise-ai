@@ -1,7 +1,8 @@
-/** Every user-facing message from the PRD, in one place (plan Section 5, rule 9). */
+/** Every user-facing message from the PRD that more than one place needs (plan Section 5, rule 9). */
 export const MESSAGES = {
   loggedOut: 'You were logged out to keep your money details safe. Log in again.',
   serverError: 'Something went wrong. Try again.',
+  notAllowed: "You can't do that.",
   emailInvalid: 'Enter a valid email address, like you@example.com.',
   firstNameInvalid: 'Enter your first name (2 to 40 letters).',
   passwordRequired: 'Enter your password.',
@@ -19,4 +20,16 @@ export const MESSAGES = {
   linkExpired: 'This link has expired. Ask for a new one.',
   accountDeleted: 'Your account and all your data have been deleted.',
   accountDeleteFailed: "We couldn't delete your account. Try again.",
+  saveFailed: "We couldn't save that. Try again.",
+  deleteFailed: "We couldn't delete that. Try again.",
+  csvWrongTemplate: "This file doesn't match the CreditWise template. Download the template and try again.",
+  csvNotCsv: 'Please choose a .csv file. In Excel, use Save As and choose CSV.',
+  csvTooBig: 'This file is bigger than 1 MB or has more than 500 rows. Split it into smaller files.',
+  csvOverLimit: 'This would take you over 1,000 transactions. Delete all transactions in Account, then try again.',
+  transactionDate: 'Choose a date in the last 90 days.',
+  transactionDescription: 'Enter a description of up to 80 characters.',
+  transactionAmount: 'Enter an amount from R0.01 to R1,000,000.00.',
+  questionTooLong: 'Questions can be up to 500 characters.',
+  askLimitReached: "You've used your 20 questions for today. You can ask again after midnight.",
+  askUnavailable: 'Ask CreditWise is not available right now. Try again in a few minutes.',
 } as const;

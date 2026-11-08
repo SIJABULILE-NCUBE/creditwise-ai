@@ -107,7 +107,7 @@ export const S3LogIn: React.FC = () => {
         </Button>
         <p className="text-center text-base text-secondaryText">
           New to CreditWise AI?{' '}
-          <Link to="/sign-up" className="text-primary underline">
+          <Link to="/sign-up" className="inline-flex min-h-touch items-center text-primary underline">
             Create an account
           </Link>
         </p>

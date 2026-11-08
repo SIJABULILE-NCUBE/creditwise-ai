@@ -1,12 +1,13 @@
 import Papa from 'papaparse';
 import { addDays } from '../../src/lib/dates.js';
+import { MESSAGES } from '../../src/lib/messages.js';
 
 /** BR9: reading and checking the uploaded CSV text. */
 export const CSV_MESSAGES = {
-  wrongTemplate: "This file doesn't match the CreditWise template. Download the template and try again.",
-  notCsv: 'Please choose a .csv file. In Excel, use Save As and choose CSV.',
-  tooBig: 'This file is bigger than 1 MB or has more than 500 rows. Split it into smaller files.',
-  overLimit: 'This would take you over 1,000 transactions. Delete all transactions in Account, then try again.',
+  wrongTemplate: MESSAGES.csvWrongTemplate,
+  notCsv: MESSAGES.csvNotCsv,
+  tooBig: MESSAGES.csvTooBig,
+  overLimit: MESSAGES.csvOverLimit,
 } as const;
 
 const MAX_BYTES = 1024 * 1024;

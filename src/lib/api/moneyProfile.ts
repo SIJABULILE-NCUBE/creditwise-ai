@@ -1,4 +1,6 @@
 import { supabase } from '../supabase';
+import { mapDbError } from '../errors';
+import { MESSAGES } from '../messages';
 
 /** OP8 to OP14. */
 export interface Debt {
@@ -32,16 +34,16 @@ export interface MoneyProfileData {
 
 export type SaveResult = { ok: true } | { ok: false; error: string };
 
-const SAVE_FAILED = "We couldn't save that. Try again.";
-const DELETE_FAILED = "We couldn't delete that. Try again.";
+const SAVE_FAILED = MESSAGES.saveFailed;
+const DELETE_FAILED = MESSAGES.deleteFailed;
 
 const failed = (message: string): SaveResult => ({ ok: false, error: message });
 
-function saveResult(error: { message: string } | null): SaveResult {
+function saveResult(error: { message: string; code?: string } | null): SaveResult {
   if (!error) return { ok: true };
   if (error.message.includes('limit_debts')) return failed("You've reached the limit of 15 debts.");
   if (error.message.includes('limit_expenses')) return failed("You've reached the limit of 20 expenses.");
-  return failed(SAVE_FAILED);
+  return failed(mapDbError(error, SAVE_FAILED));
 }
 
 export async function getMoneyProfile(): Promise<MoneyProfileData | null> {
@@ -100,7 +102,7 @@ export async function saveDebt(fields: DebtFields, id?: string): Promise<SaveRes
 
 export async function deleteDebt(id: string): Promise<SaveResult> {
   const { error } = await supabase.from('debts').delete().eq('id', id);
-  return error ? failed(DELETE_FAILED) : { ok: true };
+  return error ? failed(mapDbError(error, DELETE_FAILED)) : { ok: true };
 }
 
 export interface ExpenseFields {
@@ -117,5 +119,5 @@ export async function saveExpense(fields: ExpenseFields, id?: string): Promise<S
 
 export async function deleteExpense(id: string): Promise<SaveResult> {
   const { error } = await supabase.from('expenses').delete().eq('id', id);
-  return error ? failed(DELETE_FAILED) : { ok: true };
+  return error ? failed(mapDbError(error, DELETE_FAILED)) : { ok: true };
 }

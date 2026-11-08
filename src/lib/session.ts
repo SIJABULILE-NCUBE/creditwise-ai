@@ -54,3 +54,15 @@ export function startSessionWatch(onExpired: () => void): () => void {
   check();
   return stop;
 }
+
+const EXPIRED_EVENT = 'creditwise:session-expired';
+
+/** The server refused the login token (401), so the session is over whatever the local timers say. */
+export function notifySessionExpired() {
+  window.dispatchEvent(new Event(EXPIRED_EVENT));
+}
+
+export function onSessionExpired(listener: () => void): () => void {
+  window.addEventListener(EXPIRED_EVENT, listener);
+  return () => window.removeEventListener(EXPIRED_EVENT, listener);
+}

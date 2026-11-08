@@ -50,7 +50,7 @@ export const S6Snapshot: React.FC = () => {
     <>
       <Header showLogo rightAction={<AccountButton />} />
       <OfflineBanner />
-      <main className="mx-auto max-w-tablet space-y-4 p-4 desktop:max-w-desktop">
+      <main className="mx-auto max-w-tablet space-y-4 p-4 tablet:p-6 desktop:max-w-desktop desktop:p-8">
         {status === 'loading' && (
           <div data-testid="snapshot-loading" className="space-y-4">
             <LoadingPlaceholder variant="card" />

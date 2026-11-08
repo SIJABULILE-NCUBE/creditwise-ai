@@ -1,4 +1,5 @@
 import { supabase } from '../supabase';
+import { mapDbError } from '../errors';
 import { MESSAGES } from '../messages';
 import { compareDescription, type FlagStatus, type FlagType, type Payment } from '../rules/flags';
 import { callApi } from './http';
@@ -58,7 +59,7 @@ export async function getEarlierPayments(transaction: Payment): Promise<Payment[
 
 export async function setFlagStatus(id: string, status: FlagStatus): Promise<SaveResult> {
   const { error } = await supabase.from('transactions').update({ flag_status: status }).eq('id', id);
-  return error ? { ok: false, error: "We couldn't update this flag. Try again." } : { ok: true };
+  return error ? { ok: false, error: mapDbError(error, "We couldn't update this flag. Try again.") } : { ok: true };
 }
 
 export type ImportResult = { ok: true; added: number; skipped: number; needChecking: number } | { ok: false; error: string };

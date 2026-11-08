@@ -11,7 +11,7 @@ export const GuideCard: React.FC<{ guide: GuideSummary; onOpen: (guide: GuideSum
     <button
       type="button"
       onClick={() => onOpen(guide)}
-      className="flex w-full items-center gap-3 rounded-card border border-appBorder bg-surface p-4 text-left focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent"
+      className="flex min-h-14 w-full items-center gap-3 rounded-card border border-appBorder bg-surface p-4 text-left focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent"
     >
       <Icon className="h-6 w-6 shrink-0 text-primary" aria-hidden="true" />
       <span className="min-w-0 flex-1">

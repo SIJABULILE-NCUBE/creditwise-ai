@@ -71,7 +71,7 @@ export const S2SignUp: React.FC = () => {
           I agree to the{' '}
           <button
             type="button"
-            className="text-primary underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent"
+            className="inline-flex min-h-touch items-center text-primary underline"
             onClick={(event) => {
               event.preventDefault();
               setPrivacyOpen(true);
@@ -83,7 +83,7 @@ export const S2SignUp: React.FC = () => {
         {failure === 'exists' && (
           <p className="text-sm text-appError" role="alert">
             <span>{MESSAGES.emailExists}</span>{' '}
-            <Link to="/log-in" className="underline">
+            <Link to="/log-in" className="inline-flex min-h-touch items-center underline">
               Log in
             </Link>
           </p>
@@ -98,7 +98,7 @@ export const S2SignUp: React.FC = () => {
         </Button>
         <p className="text-center text-base text-secondaryText">
           Already have an account?{' '}
-          <Link to="/log-in" className="text-primary underline">
+          <Link to="/log-in" className="inline-flex min-h-touch items-center text-primary underline">
             Log in
           </Link>
         </p>

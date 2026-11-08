@@ -1,7 +1,7 @@
 import React, { createContext, useCallback, useContext, useEffect, useMemo, useRef, useState } from 'react';
 import * as authApi from './api/auth';
 import type { AccountInfo, SessionInfo } from './api/auth';
-import { clearSessionTimes, startSessionWatch } from './session';
+import { clearSessionTimes, onSessionExpired, startSessionWatch } from './session';
 
 export type ExitReason = 'expired' | 'deleted';
 
@@ -89,12 +89,18 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   const userId = session?.userId;
   useEffect(() => {
     if (!userId || recovery || loading) return;
-    return startSessionWatch(() => {
+    const expire = () => {
       void authApi.logOut().finally(() => {
         clearSessionTimes();
         markSignedOut('expired');
       });
-    });
+    };
+    const stopWatch = startSessionWatch(expire);
+    const stopListening = onSessionExpired(expire);
+    return () => {
+      stopWatch();
+      stopListening();
+    };
   }, [userId, recovery, loading, markSignedOut]);
 
   const clearRecovery = useCallback(() => setRecovery(false), []);

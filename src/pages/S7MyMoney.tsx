@@ -84,7 +84,7 @@ export const S7MyMoney: React.FC = () => {
     <>
       <Header title="My Money" rightAction={<AccountButton />} />
       <OfflineBanner />
-      <main className="mx-auto max-w-tablet space-y-4 p-4 desktop:max-w-desktop">
+      <main className="mx-auto max-w-tablet space-y-4 p-4 tablet:p-6 desktop:max-w-desktop desktop:p-8">
         {status === 'loading' && (
           <div className="space-y-4">
             <LoadingPlaceholder variant="card" />
@@ -127,7 +127,7 @@ export const S7MyMoney: React.FC = () => {
                     <p className="text-sm text-secondaryText">Take-home pay (net)</p>
                     <p className="font-mono text-base font-medium text-mainText">{formatMoney(data.profile.netIncome as number)}</p>
                   </div>
-                  <button type="button" disabled={!online} onClick={startEditing} className={`min-h-touch text-base text-primary underline ${online ? '' : 'cursor-not-allowed opacity-40'}`}>
+                  <button type="button" disabled={!online} onClick={startEditing} className={`min-h-touch min-w-touch text-base text-primary underline ${online ? '' : 'cursor-not-allowed opacity-40'}`}>
                     Edit
                   </button>
                 </>

@@ -8,15 +8,18 @@ import { LoadingPlaceholder } from '../components/LoadingPlaceholder';
 import { OfflineBanner } from '../components/OfflineBanner';
 import { Toast } from '../components/Toast';
 import { TransactionRow } from '../components/TransactionRow';
+import { TransactionTable } from '../components/TransactionTable';
 import { listTransactions, type Transaction, type TransactionFilter } from '../lib/api/transactions';
 import { formatPlainDate } from '../lib/dates';
 import { notifyFlagsChanged } from '../lib/flagEvents';
+import { useIsDesktop } from '../lib/useIsDesktop';
 import { useOnline } from '../lib/useOnline';
 import { M3AddTransactions } from '../modals/M3AddTransactions';
 import { M4FlagDetails } from '../modals/M4FlagDetails';
 
 export const S8Transactions: React.FC = () => {
   const online = useOnline();
+  const desktop = useIsDesktop();
   const [params, setParams] = useSearchParams();
   const filter: TransactionFilter = params.get('filter') === 'flagged' ? 'flagged' : 'all';
   const [rows, setRows] = useState<Transaction[]>([]);
@@ -77,7 +80,7 @@ export const S8Transactions: React.FC = () => {
     <>
       <Header title="Transactions" rightAction={<AccountButton />} />
       <OfflineBanner />
-      <main className="mx-auto max-w-tablet space-y-4 p-4 desktop:max-w-desktop">
+      <main className="mx-auto max-w-tablet space-y-4 p-4 tablet:p-6 desktop:max-w-desktop desktop:p-8">
         <Button className="w-full tablet:w-auto" disabled={!online} onClick={() => setAddOpen(true)}>
           Add transactions
         </Button>
@@ -115,7 +118,9 @@ export const S8Transactions: React.FC = () => {
           <EmptyState message="No transactions yet. Upload your bank activity to check for double charges and unusual amounts." actionLabel="Add transactions" onAction={() => setAddOpen(true)} />
         )}
         {status === 'ready' && rows.length === 0 && filter === 'flagged' && <EmptyState message="Nothing to check right now. We'll flag anything unusual when you add transactions." />}
+        {status === 'ready' && desktop && rows.length > 0 && <TransactionTable rows={rows} onOpen={setSelected} disabled={!online} />}
         {status === 'ready' &&
+          !desktop &&
           groups.map((group) => (
             <section key={group.date}>
               <h2 className="py-1 text-sm font-semibold text-secondaryText">{formatPlainDate(group.date)}</h2>

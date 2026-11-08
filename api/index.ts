@@ -15,7 +15,7 @@ app.use('/api/transactions', transactionsRouter);
 
 // JSON 404 handler for unknown routes
 app.use((_req, res) => {
-  res.status(404).json({ error: 'Not found' });
+  res.status(404).json({ error: MESSAGES.serverError });
 });
 
 // Never send raw error details to the browser or write user data to logs.

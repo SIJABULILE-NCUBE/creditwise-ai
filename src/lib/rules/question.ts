@@ -1,7 +1,9 @@
+import { MESSAGES } from '../messages.js';
+
 export const DAILY_QUESTION_LIMIT = 20;
 export const MAX_QUESTION_LENGTH = 500;
-export const QUESTION_TOO_LONG = 'Questions can be up to 500 characters.';
-export const LIMIT_REACHED = "You've used your 20 questions for today. You can ask again after midnight.";
+export const QUESTION_TOO_LONG = MESSAGES.questionTooLong;
+export const LIMIT_REACHED = MESSAGES.askLimitReached;
 
 export function validateQuestion(question: string): string | null {
   return question.length > MAX_QUESTION_LENGTH ? QUESTION_TOO_LONG : null;

@@ -4,12 +4,13 @@ import { askClaude } from '../lib/claude.js';
 import { supabaseAdmin } from '../lib/supabaseAdmin.js';
 import { requireUser } from '../middleware/requireUser.js';
 import { todaySast } from '../../src/lib/dates.js';
+import { MESSAGES } from '../../src/lib/messages.js';
 import { sumOf } from '../../src/lib/calculations.js';
 import { DAILY_QUESTION_LIMIT, LIMIT_REACHED, questionsLeft, validateQuestion } from '../../src/lib/rules/question.js';
 
 export const askRouter = Router();
 
-const UNAVAILABLE = 'Ask CreditWise is not available right now. Try again in a few minutes.';
+const UNAVAILABLE = MESSAGES.askUnavailable;
 const HISTORY_SIZE = 10;
 const MAX_ANSWER_WORDS = 200;
 const MAX_STORED_ANSWER = 2000;

@@ -1348,22 +1348,22 @@ All tests in this phase are pgTAP tests in `supabase/tests/`, acting as the seed
 | T-DB-6 | Database | `supabase/tests/090_rls_all.test.sql` | Every table in `public` has RLS enabled |
 | T-E2E-1 … 7 | E2E | `e2e/` | All 7 flows run back to back on a fresh reset and seed, in Chromium and WebKit |
 
-- [ ] All tests above are written, run, and fail for the expected reason (or are new checks that must pass).
+- [x] All tests above are written, run, and fail for the expected reason (or are new checks that must pass).
 
 **Step 2: Backend (Green)**
 
-- [ ] Fix whatever the tests reveal, using new migrations only (never edit old ones).
-- [ ] Check every `/api` error path returns an exact message from `src/lib/messages.ts`.
+- [x] Fix whatever the tests reveal, using new migrations only (never edit old ones).
+- [x] Check every `/api` error path returns an exact message from `src/lib/messages.ts`.
 
 **Step 3: Frontend (Green)**
 
-- [ ] One error handler maps every backend error to the PRD 12.2 messages.
-- [ ] Accessibility labels, touch sizes, keyboard order and focus outlines everywhere.
-- [ ] Tablet and desktop layouts from PRD 9.3 on S6, S7 and S8.
+- [x] One error handler maps every backend error to the PRD 12.2 messages.
+- [x] Accessibility labels, touch sizes, keyboard order and focus outlines everywhere.
+- [x] Tablet and desktop layouts from PRD 9.3 on S6, S7 and S8.
 
 **Step 4: Refactor and full check**
 
-- [ ] Code cleaned up; no duplicated logic; names use PRD key terms.
+- [x] Code cleaned up; no duplicated logic; names use PRD key terms.
 - [ ] Full check passes (lint, type check, every automated test from every phase so far); the full Playwright suite passes.
 - [ ] Line coverage for the files in 12.5 is at least 90% (`npm test -- --coverage`).
 
@@ -1378,10 +1378,10 @@ All tests in this phase are pgTAP tests in `supabase/tests/`, acting as the seed
 **Definition of Done**
 
 - [ ] Every test in Step 1 passes.
-- [ ] All earlier tests still pass.
-- [ ] Every screen shows all its required states.
+- [x] All earlier tests still pass.
+- [x] Every screen shows all its required states.
 - [ ] Manual checks are ticked by the human.
-- [ ] Progress log updated (Section 17).
+- [x] Progress log updated (Section 17).
 
 **Commit message:** `Phase 8: Hardening`
 
@@ -1544,6 +1544,7 @@ All tests in this phase are pgTAP tests in `supabase/tests/`, acting as the seed
 | Phase 5 | 2026-11-08 | Complete (automated) except T-SEC-10b (#11); manual checks pending | 142 unit/component, 31 integration, 139 of 140 database; T-E2E-2 passes in Chromium and WebKit | Phase 5: Transaction check (F4) | Lint, type check, secret scan clean. Fixed a fixture generator typo (one invalid date in old-rows.csv). **Manual checks for the human:** download the template, fill 2 months of test activity in Excel, save as CSV and upload on a real phone; check every flag against BR11 to BR13 by hand; compare S8, M3, M4, M8 with their designs. |
 | Phase 6 | 2026-11-08 | Complete (automated) except T-SEC-10b (#11) and T-E2E-6 on WebKit (#13); manual checks pending | 158 unit/component, 40 integration, 139 of 140 database; E2E 13 of 14 (Chromium 7/7, WebKit 6/7) | Phase 6: Ask CreditWise (F5) | Lint, type check, secret scan clean. npm run check stops at the database step because of T-SEC-10b, so each step was run separately. Real model not called (#15). **Manual checks for the human:** with a real ANTHROPIC_API_KEY ask the 4 suggested questions as Thando and check the figures; run the guardrail list 3 times and record the results here; check the US$5 spend limit in the Anthropic Console; compare S9 and M8 with their designs. |
 | Phase 7 | 2026-11-08 | Complete (automated) with 1 known issue; manual checks pending | 180 unit/component, 42 integration, 140 of 140 database; E2E 17 of 18 (Chromium 9/9, WebKit 8/9) | Phase 7: Get ready and What if (F6, F7) | npm run check passes in full now that T-SEC-10b checks for 0 rows changed (Section 18 #11). **Known issue:** T-E2E-6 still hangs on WebKit on the Forgot Password screen; skipped for now by the project owner (Section 18 #13, README). No real ANTHROPIC_API_KEY yet, so the Phase 6 real-model checks remain pending (#15). T-E2E-4 and T-E2E-5 use new users with Sibusiso's figures and no ticks, so they do not change the seed data. **Manual checks for the human:** read all 3 guides on a real phone and compare them with docs/content/guides.md word for word; check the M5 figures for Sibusiso with a calculator; compare S10, M6 and M5 with their designs.
+| Phase 8 | 2026-11-08 | Complete (automated) with 1 known issue and 1 blocked check; manual checks pending | 251 unit/component, 43 integration, 141 of 141 database; E2E 21 of 22 (Chromium 11/11, WebKit 10/11) on a fresh reset and seed | Phase 8: Hardening | npm run check passes. **Known issue:** T-E2E-6 still hangs on WebKit (Section 18 #13), so the full Playwright suite and step 1 boxes stay unticked. **Blocked:** the 90% coverage check needs a library that is not approved (Section 18 #16). **Decision needed:** S6 Stat cards on phones (Section 18 #17). Added one error handler for PRD 12.2 messages, including "You can't do that."; a 401 from the API now signs the user out to S3; S8 table on desktop; 44 px touch targets; focus outlines. **Manual checks for the human:** on a real phone with mobile data, every screen shows content or Loading placeholders within 3 seconds (T-NFR-12); airplane mode on every tab: the banner appears and nothing crashes; open the app on Android Chrome, Samsung Internet, iPhone Safari and desktop Edge (T-NFR-13); use every screen with the keyboard only, and with TalkBack or VoiceOver on S6 and S9; compare each screen with its design.
 
 ---
 
@@ -1566,6 +1567,8 @@ All tests in this phase are pgTAP tests in `supabase/tests/`, acting as the seed
 | 13 | T-E2E-6 passes in Chromium but hangs in WebKit on the S4 Forgot Password step: after filling Email the field is empty and Send link stays disabled. Three fixes were tried (wait for the verify-link sign-out, wait for network idle, longer test limit). What the agent needs: a human to try S4 in real iPhone Safari; if it works there, this is a WebKit-on-Windows test-driver issue. | T-E2E-6; Stuck rule (Section 2 #14) | Skipped for now. Recorded as a known issue in the README and the Progress log. | Answered |
 | 14 | PRD 11.7 lists only 3 of the 10 guardrail questions, and the plan says never to invent wording. What are the other 7? | PRD 11.7; T-BR17-2 | The project owner supplied the other 7 questions; all 10 are in the README. | Answered |
 | 15 | The real Claude model has not been called by the agent: automated tests use a fake (Section 18 #10), and T-US9-1, T-US10-1, T-US10-2 and T-BR17-2 need a human run with a real key. Is ANTHROPIC_API_KEY in .env a real key with the US$5 limit? | Phase 6 manual checks | No real key yet. Keep the placeholder and the fake AI for tests. | Answered |
+| 16 | The 90% line coverage check (`npm test -- --coverage`) needs `@vitest/coverage-v8`, which is not installed and is not in Section 4.1. May it be added? | Section 12.5; Phase 8 Step 4; rule 13 | Not added (rule 13), so coverage has not been measured and this Phase 8 box stays unticked. | Open |
+| 17 | PRD S6 asks for the 2 Stat cards side by side on phones (stacked under 360 px), but a 28 px money value such as -R3,100.00 does not fit in a half-width card at 390 px. Should they stay stacked until the tablet width, or should the value be smaller on phones? | PRD 8.2 S6, 8.3 Stat card; Section 7.1 | Left stacked under 640 px, side by side from 640 px, so nothing overflows. | Open |
 
 ---
 

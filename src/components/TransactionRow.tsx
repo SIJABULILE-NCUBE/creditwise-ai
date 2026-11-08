@@ -3,6 +3,10 @@ import type { Transaction } from '../lib/api/transactions';
 import { formatMoney } from '../lib/money';
 import { FlagPill } from './FlagPill';
 
+export const TransactionAmount: React.FC<{ amount: number }> = ({ amount }) => (
+  <span className={`font-mono text-base font-medium ${amount > 0 ? 'text-appSuccess' : 'text-mainText'}`}>{amount > 0 ? `+${formatMoney(amount)}` : formatMoney(amount)}</span>
+);
+
 export interface TransactionRowProps {
   transaction: Transaction;
   onOpen: (transaction: Transaction) => void;
@@ -11,14 +15,13 @@ export interface TransactionRowProps {
 
 export const TransactionRow: React.FC<TransactionRowProps> = ({ transaction, onOpen, disabled = false }) => {
   const { description, amount, flag_type: flagType, flag_status: flagStatus } = transaction;
-  const moneyIn = amount > 0;
   const content = (
     <>
       <span className="min-w-0 flex-1">
         <span className="block truncate text-base text-mainText">{description}</span>
         {flagType !== 'none' && <FlagPill type={flagType} status={flagStatus} />}
       </span>
-      <span className={`font-mono text-base font-medium ${moneyIn ? 'text-appSuccess' : 'text-mainText'}`}>{moneyIn ? `+${formatMoney(amount)}` : formatMoney(amount)}</span>
+      <TransactionAmount amount={amount} />
     </>
   );
 

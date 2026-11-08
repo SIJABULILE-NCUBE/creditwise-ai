@@ -1,5 +1,7 @@
 import { supabase } from '../supabase';
 import { todaySast } from '../dates';
+import { mapDbError } from '../errors';
+import { MESSAGES } from '../messages';
 import { questionsLeft } from '../rules/question';
 import { callApi } from './http';
 import type { SaveResult } from './moneyProfile';
@@ -31,5 +33,5 @@ export async function askQuestion(question: string): Promise<AskResult> {
 export async function clearChat(): Promise<SaveResult> {
   const { data } = await supabase.auth.getSession();
   const { error } = await supabase.from('chat_messages').delete().eq('user_id', data.session?.user.id);
-  return error ? { ok: false, error: "We couldn't delete that. Try again." } : { ok: true };
+  return error ? { ok: false, error: mapDbError(error, MESSAGES.deleteFailed) } : { ok: true };
 }

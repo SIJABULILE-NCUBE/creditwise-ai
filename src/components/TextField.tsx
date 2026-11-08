@@ -50,7 +50,7 @@ export const TextField: React.FC<TextFieldProps> = ({
           <button
             type="button"
             onClick={() => setShowPassword((prev) => !prev)}
-            className="absolute right-3 top-1/2 -translate-y-1/2 text-secondaryText hover:text-mainText focus:outline-none"
+            className="absolute right-0 top-1/2 flex h-11 w-11 -translate-y-1/2 items-center justify-center text-secondaryText hover:text-mainText"
             aria-label={showPassword ? 'Hide password' : 'Show password'}
           >
             {showPassword ? (
