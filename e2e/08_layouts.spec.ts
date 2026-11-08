@@ -67,6 +67,26 @@ test('T-NFR-7 layouts at 360, 768 and 1440 px', async ({ page }) => {
   }
 });
 
+test('T-NFR-7 S6 Stat cards are one column under 640 px and side by side from 640 px (PRD 9.3)', async ({ page }) => {
+  await logIn(page, 'thando.nkosi@example.com', SEED_PASSWORD);
+  await expect(page.getByText('36%', { exact: true })).toBeVisible();
+  const left = page.getByText("What's left from your take-home pay");
+  const room = page.getByText('How much more you could add');
+
+  for (const width of [360, 390, 639]) {
+    await page.setViewportSize({ width, height: 844 });
+    const [a, b] = [await left.boundingBox(), await room.boundingBox()];
+    expect(Math.abs(a!.x - b!.x), `same column at ${width}`).toBeLessThan(1);
+    expect(b!.y, `stacked at ${width}`).toBeGreaterThan(a!.y);
+  }
+  for (const width of [640, 768]) {
+    await page.setViewportSize({ width, height: 844 });
+    const [a, b] = [await left.boundingBox(), await room.boundingBox()];
+    expect(b!.x, `side by side at ${width}`).toBeGreaterThan(a!.x + 200);
+    expect(Math.abs(a!.y - b!.y), `same row at ${width}`).toBeLessThan(1);
+  }
+});
+
 test('T-NFR-3 every tappable control measures at least 44 px at phone width', async ({ page }) => {
   await logIn(page, 'thando.nkosi@example.com', SEED_PASSWORD);
   await expect(page.getByText('36%', { exact: true })).toBeVisible();

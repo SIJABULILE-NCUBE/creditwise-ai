@@ -11,6 +11,12 @@ export default defineConfig({
     },
   },
   test: {
+    coverage: {
+      provider: 'v8',
+      include: ['src/lib/money.ts', 'src/lib/calculations.ts', 'src/lib/rules/**/*.ts', 'api/lib/csv.ts'],
+      reporter: ['text'],
+      thresholds: { lines: 90, perFile: true },
+    },
     projects: [
       {
         extends: true,
