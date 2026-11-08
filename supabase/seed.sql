@@ -1,0 +1,1 @@
+-- Empty on purpose (seeding is done by scripts/seed.ts)

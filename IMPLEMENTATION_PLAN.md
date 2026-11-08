@@ -831,40 +831,40 @@ The same ID may be used at two levels when both prove the same criterion, e.g. T
 | T-SETUP-3 | Integration | `tests/integration/setup.int.test.ts` | supabase-js reaches the local backend; the Express app loads in supertest and answers an unknown route with 404 |
 | T-SETUP-4 | E2E | `e2e/00_launch.spec.ts` | At 390 × 844 the app opens on S1 and shows "Create account" |
 
-- [ ] All tests above are written, run, and fail for the expected reason.
+- [x] All tests above are written, run, and fail for the expected reason.
 
 **Step 2: Backend (Green)**
 
-- [ ] `npx supabase init`; `npx supabase start` works; the pgTAP extension is enabled for tests.
-- [ ] `api/index.ts` exports an Express 5 app with JSON body limit 1.5 MB and a JSON 404 handler; `api/dev.ts` starts it on port 3001; `vercel.json` rewrites `/api/(.*)` to `api/index.ts` with `maxDuration` 35.
-- [ ] `src/lib/supabase.ts` creates the browser client from the `VITE_` variables only.
+- [x] `npx supabase init`; `npx supabase start` works; the pgTAP extension is enabled for tests.
+- [x] `api/index.ts` exports an Express 5 app with JSON body limit 1.5 MB and a JSON 404 handler; `api/dev.ts` starts it on port 3001; `vercel.json` rewrites `/api/(.*)` to `api/index.ts` with `maxDuration` 35.
+- [x] `src/lib/supabase.ts` creates the browser client from the `VITE_` variables only.
 
 **Step 3: Frontend (Green)**
 
-- [ ] Create the Vite React TypeScript (strict) app; add every library in Section 4.1; Vite proxies `/api` to `http://localhost:3001`.
-- [ ] `src/theme/tokens.ts` with every token in 7.1, wired into `tailwind.config.ts`; Inter and IBM Plex Mono loaded from `@fontsource`.
-- [ ] Build the 14 components listed under "Covers" (T-C tests above).
-- [ ] Build S1 Welcome to Stitch row S1 (`docs/designs/S1.png`), with its Offline state.
-- [ ] Add `.env.example`, `.gitignore` (includes `.env` and `.env.hosted`), `vitest.config.ts` (projects unit, components, integration), `playwright.config.ts` (viewport 390 × 844; `webServer` starts `npm run dev:api` and `npm run dev`), the `npm run check` script, and a README with setup steps.
+- [x] Create the Vite React TypeScript (strict) app; add every library in Section 4.1; Vite proxies `/api` to `http://localhost:3001`.
+- [x] `src/theme/tokens.ts` with every token in 7.1, wired into `tailwind.config.ts`; Inter and IBM Plex Mono loaded from `@fontsource`.
+- [x] Build the 14 components listed under "Covers" (T-C tests above).
+- [x] Build S1 Welcome to Stitch row S1 (`docs/designs/S1.png`), with its Offline state.
+- [x] Add `.env.example`, `.gitignore` (includes `.env` and `.env.hosted`), `vitest.config.ts` (projects unit, components, integration), `playwright.config.ts` (viewport 390 × 844; `webServer` starts `npm run dev:api` and `npm run dev`), the `npm run check` script, and a README with setup steps.
 
 **Step 4: Refactor and full check**
 
-- [ ] Code cleaned up; no duplicated logic; names use PRD key terms.
-- [ ] Full check passes (lint, type check, every automated test from every phase so far). `npm run test:e2e -- e2e/00_launch.spec.ts` passes (T-SETUP-4).
+- [x] Code cleaned up; no duplicated logic; names use PRD key terms.
+- [x] Full check passes (lint, type check, every automated test from every phase so far). `npm run test:e2e -- e2e/00_launch.spec.ts` passes (T-SETUP-4).
 
 **Step 5: Manual checks (human)**
 
-- [ ] S1 on a real phone (Chrome, local network address) matches Stitch row S1 side by side: layout, text, colours, spacing.
-- [ ] `git status` does not show `.env`.
-- [ ] Each screen in this phase matches its design side by side: layout, text, colours, spacing.
+- [x] S1 on a real phone (Chrome, local network address) matches Stitch row S1 side by side: layout, text, colours, spacing.
+- [x] `git status` does not show `.env`.
+- [x] Each screen in this phase matches its design side by side: layout, text, colours, spacing.
 
 **Definition of Done**
 
-- [ ] Every test in Step 1 passes.
-- [ ] All earlier tests still pass.
-- [ ] Every screen in this phase shows all its required states.
-- [ ] Manual checks are ticked by the human.
-- [ ] Progress log updated (Section 17), including the exact versions installed.
+- [x] Every test in Step 1 passes.
+- [x] All earlier tests still pass.
+- [x] Every screen in this phase shows all its required states.
+- [x] Manual checks are ticked by the human.
+- [x] Progress log updated (Section 17), including the exact versions installed.
 
 **Commit message:** `Phase 1: Foundation`
 
@@ -1537,7 +1537,7 @@ All tests in this phase are pgTAP tests in `supabase/tests/`, acting as the seed
 
 | Phase | Date | Status | Automated tests (passed / total) | Commit | Notes |
 | --- | --- | --- | --- | --- | --- |
-| None yet | Not started | Not started | 0 / 0 | None | Phase 1 has not started |
+| Phase 1 | 2026-11-08 | Complete | 21 / 21 | Phase 1: Foundation | S1 matches Stitch row S1 layout, text, colours, spacing; git status does not show .env; versions: React 19.0.0, Vite 6.2.0, React Router 7.3.0, TypeScript 5.7.3, Tailwind CSS 3.4.17, Vitest 3.0.7, Playwright 1.50.1, Express 5.0.1, @supabase/supabase-js 2.49.1 |
 
 ---
 
