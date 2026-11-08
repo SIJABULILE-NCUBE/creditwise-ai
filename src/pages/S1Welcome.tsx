@@ -18,7 +18,7 @@ export const S1Welcome: React.FC = () => {
   }, [location.state]);
 
   return (
-    <div className="min-h-screen bg-pageBackground flex flex-col justify-between p-4 sm:p-6 md:p-8 max-w-md mx-auto">
+    <div className="min-h-screen bg-pageBackground flex flex-col justify-between p-4 tablet:p-6 desktop:p-8 max-w-md mx-auto">
       <OfflineBanner />
 
       {toastMessage && (
@@ -94,7 +94,7 @@ export const S1Welcome: React.FC = () => {
         </div>
 
         {/* 7. Disclaimer */}
-        <p className="text-xs sm:text-sm text-secondaryText text-center max-w-xs">
+        <p className="text-sm text-secondaryText text-center max-w-xs">
           CreditWise AI explains and educates. It does not give financial advice or credit.
         </p>
       </div>

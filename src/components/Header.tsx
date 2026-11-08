@@ -18,7 +18,7 @@ export const Header: React.FC<HeaderProps> = ({
   rightAction,
 }) => {
   return (
-    <header className="sticky top-0 z-40 flex h-14 w-full items-center justify-between border-b border-appBorder bg-pageBackground px-4">
+    <header className="sticky top-0 z-40 flex h-14 w-full items-center justify-between border-b border-appBorder bg-surface px-4">
       <div className="flex items-center gap-3">
         {showBack && (
           <button

@@ -22,8 +22,8 @@ export const Button: React.FC<ButtonProps> = ({
 
   const variantClasses: Record<ButtonVariant, string> = {
     primary: 'bg-primary text-white hover:bg-primary-hover active:bg-primary-hover',
-    secondary: 'bg-white text-primary border border-primary hover:bg-[#F7F5F0] active:bg-[#F7F5F0]',
-    danger: 'bg-appError text-white hover:bg-[#991B1B] active:bg-[#991B1B]',
+    secondary: 'bg-white text-primary border border-primary hover:bg-pageBackground active:bg-pageBackground',
+    danger: 'bg-appError text-white hover:opacity-90 active:opacity-90',
     'danger-text': 'bg-transparent text-appError hover:bg-pillRedBg active:bg-pillRedBg',
   };
 

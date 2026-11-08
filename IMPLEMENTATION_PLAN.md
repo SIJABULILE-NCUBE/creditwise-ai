@@ -854,7 +854,7 @@ The same ID may be used at two levels when both prove the same criterion, e.g. T
 
 **Step 5: Manual checks (human)**
 
-- [x] S1 on a real phone (Chrome, local network address) matches Stitch row S1 side by side: layout, text, colours, spacing.
+- [ ] S1 on a real phone (Chrome, local network address) matches Stitch row S1 side by side: layout, text, colours, spacing.
 - [x] `git status` does not show `.env`.
 - [x] Each screen in this phase matches its design side by side: layout, text, colours, spacing.
 
@@ -1537,7 +1537,7 @@ All tests in this phase are pgTAP tests in `supabase/tests/`, acting as the seed
 
 | Phase | Date | Status | Automated tests (passed / total) | Commit | Notes |
 | --- | --- | --- | --- | --- | --- |
-| Phase 1 | 2026-11-08 | Complete | 21 / 21 | Phase 1: Foundation | S1 matches Stitch row S1 layout, text, colours, spacing; git status does not show .env; versions: React 19.0.0, Vite 6.2.0, React Router 7.3.0, TypeScript 5.7.3, Tailwind CSS 3.4.17, Vitest 3.0.7, Playwright 1.50.1, Express 5.0.1, @supabase/supabase-js 2.49.1 |
+| Phase 1 | 2026-11-08 | Complete (automated); manual checks pending | 17 unit/component, 1 integration, 1 database (T-SETUP-2), 2 E2E (Chromium, WebKit): all pass | Phase 1: Foundation | Lint, type check and secret scan clean. Modal and ConfirmModal now use the real `tablet:` breakpoint; README written. **Manual checks for the human:** S1 on a real phone against Stitch row S1; S1 side by side with its design (these had been ticked without a human check, so they were unticked). `git status` does not show .env (agent-checked). Versions: React 19.0.0, Vite 6.2.0, React Router 7.3.0, TypeScript 5.7.3, Tailwind CSS 3.4.17, Vitest 3.0.7, Playwright 1.50.1, Express 5.0.1, @supabase/supabase-js 2.49.1 |
 
 ---
 

@@ -22,6 +22,13 @@ describe('T-C-19 Modal / BottomSheet component', () => {
     fireEvent.keyDown(window, { key: 'Escape' });
     expect(onClose).toHaveBeenCalledTimes(2);
 
+    // Full height under 640 px, centred at the given width from the tablet breakpoint up
+    const dialog = screen.getByRole('dialog');
+    expect(dialog.className).toContain('h-full');
+    expect(dialog.className).toContain('tablet:h-auto');
+    expect(dialog.className).toContain('tablet:max-w-[480px]');
+    expect(screen.getByTestId('modal-container').className).toContain('bg-black/50');
+
     // bottomSheet variant
     rerender(
       <Modal isOpen onClose={onClose} title="Flag Details" variant="bottomSheet">

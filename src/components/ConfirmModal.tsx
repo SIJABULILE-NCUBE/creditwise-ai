@@ -57,13 +57,13 @@ export const ConfirmModal: React.FC<ConfirmModalProps> = ({
           {body}
         </p>
 
-        <div className="mt-6 flex flex-col-reverse sm:flex-row sm:justify-end gap-3">
+        <div className="mt-6 flex flex-col-reverse tablet:flex-row tablet:justify-end gap-3">
           <Button
             type="button"
             variant="secondary"
             onClick={onCancel}
             disabled={loading}
-            className="w-full sm:w-auto"
+            className="w-full tablet:w-auto"
           >
             {cancelLabel}
           </Button>
@@ -72,7 +72,7 @@ export const ConfirmModal: React.FC<ConfirmModalProps> = ({
             variant="danger"
             onClick={onConfirm}
             loading={loading}
-            className="w-full sm:w-auto"
+            className="w-full tablet:w-auto"
           >
             {confirmLabel}
           </Button>

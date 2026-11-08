@@ -40,9 +40,9 @@ export const Modal: React.FC<ModalProps> = ({
   if (!isOpen) return null;
 
   const maxWidthClasses: Record<ModalMaxWidth, string> = {
-    '480': 'sm:max-w-[480px]',
-    '560': 'sm:max-w-[560px]',
-    '720': 'sm:max-w-[720px]',
+    '480': 'tablet:max-w-[480px]',
+    '560': 'tablet:max-w-[560px]',
+    '720': 'tablet:max-w-[720px]',
   };
 
   const isBottomSheet = variant === 'bottomSheet';
@@ -50,9 +50,9 @@ export const Modal: React.FC<ModalProps> = ({
   return (
     <div
       data-testid="modal-container"
-      className={`fixed inset-0 z-50 flex bg-black/30 backdrop-blur-none ${
+      className={`fixed inset-0 z-50 flex bg-black/50 ${
         isBottomSheet
-          ? 'items-end sm:items-center justify-center'
+          ? 'items-end tablet:items-center justify-center'
           : 'items-center justify-center'
       }`}
     >
@@ -62,8 +62,8 @@ export const Modal: React.FC<ModalProps> = ({
         aria-labelledby="modal-title"
         className={`w-full bg-white border border-appBorder shadow-none overflow-y-auto ${
           isBottomSheet
-            ? 'h-auto max-h-[90vh] rounded-t-card sm:rounded-card p-6'
-            : 'h-full sm:h-auto max-h-[90vh] sm:rounded-card p-6'
+            ? 'h-auto max-h-[90vh] rounded-t-card tablet:rounded-card p-6'
+            : 'h-full tablet:h-auto tablet:max-h-[90vh] tablet:rounded-card p-6'
         } ${maxWidthClasses[maxWidth]} ${className}`}
       >
         <div className="flex items-center justify-between pb-4 border-b border-appBorder">
@@ -74,7 +74,7 @@ export const Modal: React.FC<ModalProps> = ({
             type="button"
             onClick={onClose}
             aria-label="Close"
-            className="flex h-10 w-10 items-center justify-center rounded-button text-secondaryText hover:text-mainText focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent"
+            className="flex h-11 w-11 items-center justify-center rounded-button text-secondaryText hover:text-mainText focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent"
           >
             <X className="h-6 w-6" />
           </button>

@@ -17,8 +17,8 @@ export const Banner: React.FC<BannerProps> = ({
   const isGreen = variant === 'green';
 
   const containerClasses = isGreen
-    ? 'bg-pillGreenBg text-pillGreenText border-[#A7E4BA]'
-    : 'bg-pillAmberBg text-pillAmberText border-[#FBD38D]';
+    ? 'bg-pillGreenBg text-pillGreenText border-transparent'
+    : 'bg-pillAmberBg text-pillAmberText border-transparent';
 
   return (
     <div
