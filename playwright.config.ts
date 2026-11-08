@@ -1,5 +1,11 @@
 import { defineConfig, devices } from '@playwright/test';
 
+try {
+  process.loadEnvFile('.env');
+} catch {
+  // No .env file: CI provides the variables.
+}
+
 const baseURL = process.env.E2E_BASE_URL || 'http://localhost:5173';
 
 export default defineConfig({

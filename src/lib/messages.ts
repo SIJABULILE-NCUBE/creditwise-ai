@@ -1,0 +1,22 @@
+/** Every user-facing message from the PRD, in one place (plan Section 5, rule 9). */
+export const MESSAGES = {
+  loggedOut: 'You were logged out to keep your money details safe. Log in again.',
+  serverError: 'Something went wrong. Try again.',
+  emailInvalid: 'Enter a valid email address, like you@example.com.',
+  firstNameInvalid: 'Enter your first name (2 to 40 letters).',
+  passwordRequired: 'Enter your password.',
+  passwordMismatch: "The passwords don't match.",
+  emailExists: 'This email already has an account. Log in instead?',
+  wrongDetails: 'Email or password is incorrect.',
+  unverified: 'Please verify your email first.',
+  tooManyAttempts: 'Too many attempts. Wait 5 minutes and try again.',
+  verificationSent: 'Verification email sent.',
+  bannerVerify: 'Check your email and tap the link to verify your account.',
+  bannerVerified: 'Your email is verified. Log in to continue.',
+  bannerPasswordChanged: 'Password changed. Log in with your new password.',
+  resetSent: "If an account exists for this email, we've sent a reset link.",
+  resetSentToast: "We've sent a reset link to your email.",
+  linkExpired: 'This link has expired. Ask for a new one.',
+  accountDeleted: 'Your account and all your data have been deleted.',
+  accountDeleteFailed: "We couldn't delete your account. Try again.",
+} as const;

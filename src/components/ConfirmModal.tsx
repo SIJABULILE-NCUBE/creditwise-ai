@@ -10,6 +10,9 @@ export interface ConfirmModalProps {
   onConfirm: () => void;
   onCancel: () => void;
   loading?: boolean;
+  confirmDisabled?: boolean;
+  error?: string | null;
+  children?: React.ReactNode;
 }
 
 export const ConfirmModal: React.FC<ConfirmModalProps> = ({
@@ -21,6 +24,9 @@ export const ConfirmModal: React.FC<ConfirmModalProps> = ({
   onConfirm,
   onCancel,
   loading = false,
+  confirmDisabled = false,
+  error = null,
+  children,
 }) => {
   useEffect(() => {
     if (!isOpen) return;
@@ -57,6 +63,14 @@ export const ConfirmModal: React.FC<ConfirmModalProps> = ({
           {body}
         </p>
 
+        {children && <div className="mt-4 space-y-3">{children}</div>}
+
+        {error && (
+          <p role="alert" className="mt-3 text-sm text-appError">
+            {error}
+          </p>
+        )}
+
         <div className="mt-6 flex flex-col-reverse tablet:flex-row tablet:justify-end gap-3">
           <Button
             type="button"
@@ -72,6 +86,7 @@ export const ConfirmModal: React.FC<ConfirmModalProps> = ({
             variant="danger"
             onClick={onConfirm}
             loading={loading}
+            disabled={confirmDisabled}
             className="w-full tablet:w-auto"
           >
             {confirmLabel}
