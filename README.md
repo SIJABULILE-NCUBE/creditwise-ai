@@ -2,6 +2,12 @@
 
 Helps working South Africans see their finances the way a lender does, so that they apply for credit they can afford. Product details are in `docs/PRD.md`; the build plan is in `IMPLEMENTATION_PLAN.md`.
 
+## Links
+
+- **Loom walkthrough:** https://www.loom.com/share/your-link-here
+- **GitHub repository:** https://github.com/Sijabulile-Ncube/creditwise-ai
+- **Live app:** Not deployed yet; runs locally (see "Set up" below)
+
 ## What you need
 
 - Node.js 22 LTS and npm
