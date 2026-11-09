@@ -11,11 +11,13 @@ Helps working South Africans see their finances the way a lender does, so that t
 ## Set up
 
 1. `npm install`
-2. Copy `.env.example` to `.env` and fill it in. `npx supabase status` prints the local URL and keys. `.env` is never committed.
-3. `npx supabase start`
-4. `npx supabase db reset`, then `npm run seed`
+2. Start Docker Desktop, then run `npx supabase start`
+3. Copy `.env.example` to `.env` (on Windows PowerShell: `Copy-Item .env.example .env`) and fill it in. `npx supabase status` prints the local URL and keys; choose your own test password for `SEED_TEST_PASSWORD`. `.env` is never committed.
+4. `npx supabase db reset`, then `npm run seed`. Run these two together, and only when you want fresh data: the reset erases everything in the local database.
 
-Then run `npm run dev:api` (port 3001) and `npm run dev` (port 5173) in two terminals, and open http://localhost:5173.
+Then run `npm run dev:api` (port 3001) and `npm run dev` (port 5173) in two separate terminals, and open http://localhost:5173.
+
+To start again on a later day, start Docker Desktop, run `npx supabase start`, then run the two commands above.
 
 ## Commands
 
@@ -36,12 +38,12 @@ Then run `npm run dev:api` (port 3001) and `npm run dev` (port 5173) in two term
 
 The password for all of them is your `SEED_TEST_PASSWORD`.
 
-| Email | Use it for |
-| --- | --- |
-| thando.nkosi@example.com | Amber, 3 open flags, chat and ticks |
-| sibusiso.ndlovu@example.com | Red, negative Money left, 1 querying flag |
-| ayanda.mthembu@example.com | No debts or transactions: empty states |
-| setup.user@example.com | Lands on Set Up |
+| Person | Email | Use it for |
+| --- | --- | --- |
+| Thando | thando.nkosi@example.com | Amber, 3 open flags, chat and ticks |
+| Sibusiso | sibusiso.ndlovu@example.com | Red, negative Money left, 1 querying flag |
+| Ayanda | ayanda.mthembu@example.com | No debts or transactions: empty states |
+| Setup | setup.user@example.com | Lands on Set Up |
 
 Emails sent by the local backend appear in the local inbox; `npx supabase status` prints its address.
 
