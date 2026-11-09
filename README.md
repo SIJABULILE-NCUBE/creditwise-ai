@@ -4,7 +4,8 @@ Helps working South Africans see their finances the way a lender does, so that t
 
 ## Links
 
-- **Loom walkthrough:** https://www.loom.com/share/your-link-here
+- **Loom walkthrough:** https://www.loom.com/share/de126b30a8794e29b2babe705cb4a95e
+- **Loom walkthrough:** https://www.loom.com/share/da716e42d0ef47b29e78e300e5f7dcc3
 - **GitHub repository:** https://github.com/Sijabulile-Ncube/creditwise-ai
 - **Live app:** Not deployed yet; runs locally (see "Set up" below)
 
